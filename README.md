@@ -2,7 +2,7 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](jarmokal.users.cs.helsinki.fi/poll)
+* [Linkki sovellukseeni](http://jarmokal.users.cs.helsinki.fi/poll)
 * [Linkki dokumentaatiooni](https://github.com/JarmoKallio/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
