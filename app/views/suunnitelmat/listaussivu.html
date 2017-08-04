@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>löydä kurssisi</h1>
+  <p>
+    Etsi käymäsi kurssi ja vastaa kyselyyn:
+  </p>
+
+  <form>
+
+    <div class="form-group">
+      <label>Hae laitoksen kursseja:</label>
+      <input type="text" class="form-control" value="laitos (esim Matematiikan Laitos)">
+    </div>
+    <div class="form-group">
+      <label>Hae opettajan kursseja:</label>
+      <input type="text" class="form-control" value="opettajan nimi">
+    </div>
+    <div class="form-group">
+      <label>Hae kurssin nimellä:</label>
+      <input type="text" class="form-control" value="kurssin nimi">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Hae</button>
+    </div>
+  </form>
+
+<!-- Luetellaan löytyneet kurssit taulukossa -->
+<h2>Löydetyt kurssit</h2>
+
+<p>
+Valitse listasta, voit myös järjestää tuloksia
+</p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Kurssi</th>
+        <th>Opettaja</th>
+        <th>Laitos</th>
+        <th>Aikaa vastata</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
+      <tr>
+        <td><a href="#">pls</a></td>
+        <td>uncle Dolan</td>
+        <td>...goopy</td>
+        <td>NaN</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

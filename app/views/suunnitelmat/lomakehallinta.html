@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+  <button type="submit" class="btn btn-primary">kirjaudu ulos</button>
+  
+  <h2>Hallinnoi lomakkeita</h2>
+  
+  <button type="submit" class="btn btn-primary">luo uusi lomake</button>
+  
+  <h3>lomakkeet:</h3>
+  <div>
+  <label>suodata lomakelistaa</label>
+  <input type="text" class="form-control" value="lomakkeen nimi, kurssi, laitos">
+  </div>
+
+  
+  
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>valitse</th>
+        <th>muokkaa</th>
+        <th>laitos</th>
+        <th>opettaja</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td><button type="submit" class="btn btn-primary">muokkaa</button></td>
+        <td>tilastöö</td>
+        <td>x</td>
+        
+      </tr>
+
+    
+
+    </tbody>
+  </table>
+
+
+
+  <button type="submit" class="btn btn-primary">poista valitut lomakkeet</button>
+{% endblock %}

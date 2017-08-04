@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>muokkaa kyselylomaketta: lomake x</h2>
+  
+
+  <h3>
+  lomakkeeseen tulevat osiot:
+  </h3>
+  
+  <div>
+  <label>viesti tai ohjeistus</label>
+  <input type="text" class="form-control" value="kirjoita viesti tai ohjeistus, näytetään lomakkeen alussa">
+  </div>
+  
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>valitse</th>
+        <th>kysymystyyppi</th>
+        <th>kysymys</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        
+        <td><input type="checkbox"></td>
+        <td>num vastaus 0-5</td>
+        <td><input type="text" class="form-control" value="kirjoita tähän kysymys"></td>
+        
+      </tr>
+
+      <tr>
+        
+        <td><input type="checkbox"></td>
+        <td>sanallinen vastaus</td>
+        <td><input type="text" class="form-control" value="kirjoita tähän kysymys"></td>
+        
+      </tr>
+
+      <tr>
+        
+        <td><input type="checkbox"></td>
+        <td>num vastaus: määrittele väli<input type="text" class="form-control" value="alaraja">
+        <input type="text" class="form-control" value="yläraja"></td>
+        <td><input type="text" class="form-control" value="kirjoita tähän kysymys"></td>
+        
+      </tr>
+
+    </tbody>
+  </table>
+
+  <p>
+  Lisää uusi kysymys, johon annetaan:
+  </p>
+  <button type="submit" class="btn btn-primary">sanallinen vastaus</button>
+  <button type="submit" class="btn btn-primary">numeerinen vastaus 0-5</button>
+  <button type="submit" class="btn btn-primary">numeerinen vastaus: määrittele</button>
+
+
+  <p>
+  Poista ja tallenna:
+  </p>
+
+  <button type="submit" class="btn btn-primary">poista valitut</button>
+  <button type="submit" class="btn btn-primary">tallenna muutokset</button>
+{% endblock %}
