@@ -15,4 +15,4 @@ Yleisiä linkkejä:
 [lomakkeiden hallinta](http://jarmokal.users.cs.helsinki.fi/poll/lomakehallinta)
 [lomakkeiden muokkaus](http://jarmokal.users.cs.helsinki.fi/poll/lomakkeen_muokkaus)
 [etusivu](http://jarmokal.users.cs.helsinki.fi/poll/etusivu)
-[esittelysivu](http://jarmokal.users.cs.helsinki.fi/poll/esittelysivu)
+[esittelysivu](http://jarmokal.users.cs.helsinki.fi/poll/esittely)
