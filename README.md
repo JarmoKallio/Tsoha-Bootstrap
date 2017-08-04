@@ -11,8 +11,8 @@ Yleisiä linkkejä:
 
 ## Linkit vk2 sivuihin
 
-[listaussivu opiskelijoille](http://jarmokal.users.cs.helsinki.fi/poll/listaus.html)
-[lomakkeiden hallinta](http://jarmokal.users.cs.helsinki.fi/poll/lomakehallinta.html)
-[lomakkeiden muokkaus](http://jarmokal.users.cs.helsinki.fi/poll/lomakkeen_muokkaus.html)
-[etusivu](http://jarmokal.users.cs.helsinki.fi/poll/etusivu.html)
-[esittelysivu](http://jarmokal.users.cs.helsinki.fi/poll/esittelysivu.html)
+[listaussivu opiskelijoille](http://jarmokal.users.cs.helsinki.fi/poll/listaus)
+[lomakkeiden hallinta](http://jarmokal.users.cs.helsinki.fi/poll/lomakehallinta)
+[lomakkeiden muokkaus](http://jarmokal.users.cs.helsinki.fi/poll/lomakkeen_muokkaus)
+[etusivu](http://jarmokal.users.cs.helsinki.fi/poll/etusivu)
+[esittelysivu](http://jarmokal.users.cs.helsinki.fi/poll/esittelysivu)
