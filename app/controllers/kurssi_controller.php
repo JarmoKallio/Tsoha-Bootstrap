@@ -24,12 +24,15 @@ class KurssiController extends BaseController{
     // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
     $kurssi->save();
     
-    Redirect::to('/lisays/' . $kurssi->id, array('message' => 'Kurssi on lisätty tietokantaan'));
-
+    Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan'));
+	
+    //Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
 	}
 
 
-
+	public static function show(){
+	View::make('lisays/esittely.html');
+	}
 
 
 }

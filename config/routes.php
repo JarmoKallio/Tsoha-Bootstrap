@@ -36,6 +36,11 @@
   KurssiController::create();
   });
 
+  $routes->get('/lisays/esittely', function(){
+  KurssiController::show();
+  });
+
+
   $routes->post('/lisays', function(){
   KurssiController::store();
   });
