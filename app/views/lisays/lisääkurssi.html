@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Lisää kurssi tietokantaan</h1>
+
+  <form method="post" action="{{base_path}}/lisays">
+    <div class="form-group">
+      <label>nimi</label>
+      <input type="text" name="nimi" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>luennoitsija</label>
+      <input type="text" name="luennoitsija" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>laitos</label>
+      <input type="text" name="laitos" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>alkamispäivä</label>
+      <input type="text" name="alkamispäivä" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>päättymispäivä</label>
+      <input type="text" name="päättymispäivä" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+{% endblock %}

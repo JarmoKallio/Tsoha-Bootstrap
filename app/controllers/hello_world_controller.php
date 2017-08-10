@@ -1,5 +1,5 @@
 <?php
-
+  //require 'app/models/kurssi.php';
   class HelloWorldController extends BaseController{
 
     public static function index(){
@@ -11,7 +11,17 @@
     public static function sandbox(){
       // Testaa koodiasi täällä
       //echo 'Hello World!';
-      View::make('helloworld.html');
+      //View::make('helloworld.html');
+
+      
+      $a = Kurssi::find('sosiaali');
+      $b = Kurssi::all();
+      $c = Kurssi::findID(2);
+      
+      // Kint-luokan dump-metodi tulostaa muuttujan arvon
+      Kint::dump($a);
+      Kint::dump($b);
+      Kint::dump($c);
     }
 
       //raakilesivuja

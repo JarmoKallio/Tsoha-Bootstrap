@@ -25,8 +25,18 @@ CREATE TABLE Käyttäjä(
 
 );
 
+CREATE TABLE Kurssi(
+  kurssi_id SERIAL PRIMARY KEY,
+  nimi VARCHAR (100),
+  laitos VARCHAR (100)
+
+);
+
+
+
 CREATE TABLE Kyselylomake(
   lomake_id SERIAL PRIMARY KEY,
+  kurssi_id INTEGER REFERENCES Kurssi(kurssi_id),
   julkaisuaika DATE,
   sulkemisaika DATE
 
@@ -35,14 +45,6 @@ CREATE TABLE Kyselylomake(
 CREATE TABLE LiitosLomakeKysymys(
   kysymys_id INTEGER REFERENCES Kysymys(kysymys_id),
   kyselylomake_id INTEGER REFERENCES Kyselylomake(lomake_id)
-
-);
-
-CREATE TABLE Kurssi(
-  kurssi_id SERIAL PRIMARY KEY,
-  lomake_id INTEGER REFERENCES Kyselylomake(lomake_id),
-  nimi VARCHAR (100),
-  laitos VARCHAR (100)
 
 );
 
