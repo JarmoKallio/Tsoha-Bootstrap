@@ -17,3 +17,5 @@ INSERT INTO Kurssi (nimi, laitos) VALUES ('johdatus filosofointiin', 'filosofise
 
 INSERT INTO YksityiskohtainenRaportti(laatimisaika,raportti) VALUES (20000, 'Deep analysis follows:');
 
+
+
