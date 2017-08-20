@@ -13,13 +13,14 @@ class Kurssi extends BaseModel{
 
 		$query->execute();
 		$rows=$query->fetchAll();
+		
 		$kurssit = array();
 
 		foreach($rows as $row){
 			$kurssit[] = new Kurssi(array(
 				'nimi' => $row['nimi'],
-				'laitos' => $row['laitos']
-
+				'laitos' => $row['laitos'],
+				'kurssi_id' => $row['kurssi_id']
 				));
 		}
 
