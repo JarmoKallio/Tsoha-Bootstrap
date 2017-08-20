@@ -46,7 +46,8 @@ Valitse listasta, voit myös järjestää tuloksia
       <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
       {% for kurssi in kurssit%}
       <tr>
-        <td><a href="{{base_path}}/suunnitelmat/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
+        <!--<td><a href="{{base_path}}/esittely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td> -->
+        <td><a href="{{base_path}}/esittely/1">{{kurssi.nimi}}</a></td>
         <td>tähän opettaja</td>
         <td>{{kurssi.laitos}}</td>
         <td>NaN</td>

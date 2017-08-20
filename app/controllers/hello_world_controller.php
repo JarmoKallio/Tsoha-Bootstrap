@@ -5,8 +5,38 @@
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
    	  //View::make('home.html');
-      echo 'Tämä on sivuetu';
+      
+      echo 'PHP-testausta';
+
+      echo '<br>';
+      echo '<br>';
+      $tila = "tilastöö";
+      echo "i like $tila.";
+      
+      echo '<br>';
+      echo '<br>';
+
+      echo '<h1>jaa a</h1>';
+      $x = false;
+      var_dump($x);
+
+      $pekka = array("ss","aa","1");
+      var_dump($pekka);
+      echo '<br>';
+      echo $pekka[1];
+      $q=2;
+      lasse($q);
+
+
+
     }
+
+    function lasse($nalle){
+      $nalle = $nalle +1;
+      echo $nalle;
+
+    }
+
 
     public static function sandbox(){
       // Testaa koodiasi täällä

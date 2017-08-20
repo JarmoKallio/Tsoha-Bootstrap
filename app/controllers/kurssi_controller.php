@@ -1,14 +1,15 @@
 <?php
 
 class KurssiController extends BaseController{
+	
 	public static function index(){
 	//kaikki kurssit tietokannasta
-	$kurssit = Kurssi::all();
-	View::make('listaus/kurssi.html', array('kurssit' =>$kurssit));
+		$kurssit = Kurssi::all();
+		View::make('listaus/kurssi.html', array('kurssit' =>$kurssit));
 	}
 
 	public static function create(){
-	View::make('lisays/lisääkurssi.html');
+		View::make('lisays/lisääkurssi.html');
 	}
 
 	public static function store(){
@@ -16,8 +17,7 @@ class KurssiController extends BaseController{
     // Alustetaan uusi Kurssi olio käyttäjän syöttämistä arvoista
     $kurssi = new Kurssi(array(
       'nimi' => $params['nimi'],
-      'laitos' => $params['laitos']
-    ));
+      'laitos' => $params['laitos']));
 
     Kint::dump($params);
 
@@ -31,8 +31,22 @@ class KurssiController extends BaseController{
 
 
 	public static function show(){
-	View::make('lisays/esittely.html');
+		View::make('lisays/esittely.html');
 	}
+
+	public static function etusivu(){
+		View::make('etusivu/etusivu.html');
+	}
+
+
+	public static function showForStudent($id){
+		//pitää lisää varmistus että löytyy, tähän ja kurssin haku metodiin
+		$kurssi = Kurssi::findID($id);
+		
+		View::make('esittely/kurssiesittely.html', array('kurssi' =>$kurssi));
+	}
+
+
 
 
 }
