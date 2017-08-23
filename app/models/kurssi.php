@@ -7,9 +7,7 @@ class Kurssi extends BaseModel{
 	public function __construct($attributes){
     parent::__construct($attributes);
 
-
-    $this->validators = array('validate_nimi');
-    //$this->validators = array('validate_nimi', 'validate_laitos');
+    $this->validators = array('validate_nimi', 'validate_laitos');
   	}
 
 	public static function all(){
