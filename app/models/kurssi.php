@@ -6,6 +6,10 @@ class Kurssi extends BaseModel{
 
 	public function __construct($attributes){
     parent::__construct($attributes);
+
+
+    $this->validators = array('validate_nimi');
+    //$this->validators = array('validate_nimi', 'validate_laitos');
   	}
 
 	public static function all(){
@@ -73,6 +77,9 @@ class Kurssi extends BaseModel{
     $row = $query->fetch();
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->kurssi_id = $row['kurssi_id'];
-  }
+  	}
+
+
+
 
 }

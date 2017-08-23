@@ -6,52 +6,26 @@
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
    	  //View::make('home.html');
       
-      echo 'PHP-testausta';
+    $doom = new Game(array(
+    'name' => 'd'
+    ));
+    $errors = $doom->validate_name();
 
-      echo '<br>';
-      echo '<br>';
-      $tila = "tilastöö";
-      echo "i like $tila.";
-      
-      echo '<br>';
-      echo '<br>';
-
-      echo '<h1>jaa a</h1>';
-      $x = false;
-      var_dump($x);
-
-      $pekka = array("ss","aa","1");
-      var_dump($pekka);
-      echo '<br>';
-      echo $pekka[1];
-      $q=2;
-      lasse($q);
+    if(count($errors) > 0){
+      echo 'Peli on virheellinen!';
+    }
 
 
 
     }
-
-    function lasse($nalle){
-      $nalle = $nalle +1;
-      echo $nalle;
-
-    }
-
 
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      //echo 'Hello World!';
-      //View::make('helloworld.html');
+      $doom = new Game(array(
+        'name' => 'd',
+      ));
+      $errors = $doom->errors();
 
-      
-      $a = Kurssi::find('sosiaali');
-      $b = Kurssi::all();
-      $c = Kurssi::findID(2);
-      
-      // Kint-luokan dump-metodi tulostaa muuttujan arvon
-      Kint::dump($a);
-      Kint::dump($b);
-      Kint::dump($c);
+      Kint::dump($errors);
     }
 
       //raakilesivuja

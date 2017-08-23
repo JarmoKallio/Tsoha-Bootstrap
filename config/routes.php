@@ -2,7 +2,10 @@
 
   $routes->get('/', function() {
     //HelloWorldController::index();
+    
+
     KurssiController::etusivu();
+    //HelloWorldController::sandbox();
   });
 
   $routes->get('/listaus', function() {

@@ -14,19 +14,27 @@ class KurssiController extends BaseController{
 
 	public static function store(){
     $params = $_POST;
-    // Alustetaan uusi Kurssi olio käyttäjän syöttämistä arvoista
-    $kurssi = new Kurssi(array(
+
+    $attributes = array(
       'nimi' => $params['nimi'],
-      'laitos' => $params['laitos']));
+      'laitos' => $params['laitos']
+      );
 
-    Kint::dump($params);
+    // Alustetaan uusi Kurssi olio käyttäjän syöttämistä arvoista
+    $kurssi = new Kurssi($attributes);
+	$errors = $kurssi->errors();
 
-    // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
+	if(count($errors) == 0){
+		 // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
     $kurssi->save();
     
-    Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan'));
-	
-    //Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
+    Redirect::to('/lisays/esittely.html', array('message' => 'Kurssi on lisätty tietokantaan'));		
+		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
+	}else{
+		View::make('/lisays/esittely.html', array('errors' => $errors, 'attributes' => $attributes));
+	}
+
+
 	}
 
 
