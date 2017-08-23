@@ -31,7 +31,7 @@ class KurssiController extends BaseController{
     Redirect::to('/lisays/esittely.html', array('message' => 'Kurssi on lisätty tietokantaan'));		
 		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
 	}else{
-		View::make('/lisays/esittely.html', array('errors' => $errors, 'attributes' => $attributes));
+		View::make('/lisays/lisääkurssi.html', array('errors' => $errors, 'attributes' => $attributes));
 	}
 
 

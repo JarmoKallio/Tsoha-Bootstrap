@@ -2,30 +2,42 @@
 {% block content %}
   <h1>Lisää kurssi tietokantaan</h1>
 
+  <!--virheiden käsittely..-->
+  {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+
   <form method="post" action="{{base_path}}/lisays">
     <div class="form-group">
-      <label>nimi</label>
-      <input type="text" name="nimi" class="form-control">
+      <label class="control-label">nimi</label>
+      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
     </div>
 
     <div class="form-group">
-      <label>luennoitsija</label>
-      <input type="text" name="luennoitsija" class="form-control">
+      <label class="control-label">luennoitsija</label>
+      <input type="text" name="luennoitsija" class="form-control" value="{{attributes.luennoitsija}}">
     </div>
 
     <div class="form-group">
-      <label>laitos</label>
-      <input type="text" name="laitos" class="form-control">
+      <label class="control-label">laitos</label>
+      <input type="text" name="laitos" class="form-control" value="{{attributes.laitos}}">
     </div>
 
     <div class="form-group">
-      <label>alkamispäivä</label>
-      <input type="text" name="alkamispäivä" class="form-control">
+      <label class="control-label">alkamispäivä</label>
+      <input type="text" name="alkamispäivä" class="form-control" value="{{attributes.alkamispäivä}}">
     </div>
 
     <div class="form-group">
-      <label>päättymispäivä</label>
-      <input type="text" name="päättymispäivä" class="form-control">
+      <label class="control-label">päättymispäivä</label>
+      <input type="text" name="päättymispäivä" class="form-control" value="{{attributes.päättymispäivä}}">
     </div>
 
     <div class="form-group">
