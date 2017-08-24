@@ -69,8 +69,8 @@
         $errors[] = 'Anna jonkin laitoksen nimi.';
       }
 
-      if($this->laitos == 'matemaattisen matematiikan ja sosiaalimatematiikan laitos' || $this->laitos == 'filosofisen matematiikan laitos' || $this->laitos == 'kemian laitos' || $this->laitos == 'fysiikan laitos'){
-        $errors[] = 'Anna olemassaolevan laitoksen nimi: matemaattisen matematiikan ja sosiaalimatematiikan laitos, filosofisen matematiikan laitos, kemian laitos tai fysiikan laitos.';
+      if(!($this->laitos == 'matemaattisen matematiikan ja sosiaalimatematiikan laitos' || $this->laitos == 'filosofisen matematiikan laitos' || $this->laitos == 'kemian laitos' || $this->laitos == 'fysiikan laitos' || $this->laitos == 'filosofisen filosofian ja sosiaalifilosofian laitos')){
+        $errors[] = 'Anna olemassaolevan laitoksen nimi: matemaattisen matematiikan ja sosiaalimatematiikan laitos, filosofisen matematiikan laitos, kemian laitos, filosofisen filosofian ja sosiaalifilosofian laitos tai fysiikan laitos.';
       }
 
       return $errors;

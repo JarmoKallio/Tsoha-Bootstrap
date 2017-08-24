@@ -49,18 +49,27 @@
   });
 
 
-
-
-
+  $routes->post('/muokkaus/muutos/testi/:id', function($id){
+  KurssiController::update($id);
+  });
 
   $routes->get('/muokkaus/:id', function($id){
-
   KurssiController::edit($id);
   });
 
 
 
   /*
+
+  $routes->post('/muokkaus/poisto/:id', function($id){
+  KurssiController::update($id);
+  });
+
+
+
+
+
+
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
   });

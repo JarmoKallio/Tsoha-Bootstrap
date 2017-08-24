@@ -28,7 +28,9 @@ class KurssiController extends BaseController{
 		 // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
     $kurssi->save();
     
-    Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan'));		
+    //polku minne mennään ilmoituksen jälkeen
+    $path='/lisays/uusi';
+    Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan','path'=>$path));		
 		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
 	}else{
 		View::make('/lisays/lisääkurssi.html', array('errors' => $errors, 'attributes' => $attributes));	}
@@ -66,8 +68,8 @@ class KurssiController extends BaseController{
 
 
   	public static function change_kurssi_parameters($id){
-  	$kurssi = Kurssi::findID($id);
-	View::make('muokkaus/muutos/muokkaa_kurssia.html', array('kurssi' => $kurssi));
+  	$attributes = Kurssi::findID($id);
+	View::make('muokkaus/muutos/muokkaa_kurssia.html', array('attributes' => $attributes));
 	}
 
 
@@ -89,7 +91,8 @@ class KurssiController extends BaseController{
 
       $kurssi->update();
 
-      Redirect::to('/lisays/esittely', array('message' => 'Kurssin tiedot on päivitetty!'));
+      $path = '/muokkaus/valitse';
+      Redirect::to('/lisays/esittely', array('message' => 'Kurssin tiedot on päivitetty!', 'path'=>$path));
 
 
       //Redirect::to('/game/' . $kurssi->kurssi_id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
