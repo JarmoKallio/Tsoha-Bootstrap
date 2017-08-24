@@ -40,10 +40,7 @@ class Kurssi extends BaseModel{
 			$kurssi = new Kurssi(array(
 				'nimi'=> $row['nimi'],
 				'laitos'=> $row['laitos']
-
-
 			));
-
 		return $kurssi;
 		}
 
@@ -75,6 +72,23 @@ class Kurssi extends BaseModel{
     $row = $query->fetch();
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->kurssi_id = $row['kurssi_id'];
+  	}
+
+
+  	public function update(){
+    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+    $query = DB::connection()->prepare('UPDATE Kurssi SET nimi = :nimi, laitos =:laitos WHERE kurssi_id = :kurssi_id');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+    $query->execute(array('nimi' => $this->nimi, 'laitos' => $this->laitos, 'kurssi_id' => $this->kurssi_id));
+    $row = $query->fetch();
+  	}
+
+  	public function delete(){
+    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+    $query = DB::connection()->prepare('DELETE FROM Kurssi WHERE kurssi_id = :kurssi_id');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+    $query->execute(array('kurssi_id' => $this->kurssi_id));
+    $row = $query->fetch();
   	}
 
 

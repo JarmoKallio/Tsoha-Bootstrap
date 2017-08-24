@@ -12,8 +12,8 @@
   KurssiController::index();
   });
 
-  $routes->get('/esittely', function() {
-  KurssiController::answerquestions();
+  $routes->get('/esittely/:id', function($id) {
+  KurssiController::answerquestions($id);
   });
 
   $routes->get('/lisays/uusi', function(){
@@ -30,10 +30,33 @@
 
 
 
-  $routes->get('/esittely/:id', function($id){
-  KurssiController::showForStudent($id);
+  $routes->get('/muokkaus/valitse', function(){
+  KurssiController::indexForEditing();
   });
 
+  
+
+  $routes->get('/muokkaus/muutos/:id', function($id){
+  // Kurssin muokkaaminen
+  KurssiController::change_kurssi_parameters($id);
+  });
+
+
+
+  $routes->get('/muokkaus/poisto/:id', function($id){
+  // Kurssin poisto
+  KurssiController::delete($id);
+  });
+
+
+
+
+
+
+  $routes->get('/muokkaus/:id', function($id){
+
+  KurssiController::edit($id);
+  });
 
 
 
