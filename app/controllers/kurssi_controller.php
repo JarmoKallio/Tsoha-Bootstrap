@@ -114,8 +114,4 @@ class KurssiController extends BaseController{
 
 	}
 
-
-
-
-
 }

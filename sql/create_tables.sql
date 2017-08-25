@@ -21,6 +21,7 @@ CREATE TABLE Vastaus(
 CREATE TABLE Käyttäjä(
   käyttäjä_id SERIAL PRIMARY KEY,
   nimi VARCHAR (100),
+  salasana VARCHAR (50),
   käyttöoikeus INTEGER
 
 );

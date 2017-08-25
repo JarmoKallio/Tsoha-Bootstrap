@@ -58,6 +58,19 @@
   });
 
 
+  //kirjautuminen
+  $routes->get('/kirjautuminen', function(){
+  KäyttäjäController::signIn();
+  });
+
+  $routes->post('/kirjautuminen', function(){
+  KäyttäjäController::handle_signIn();
+  });
+
+
+
+
+
 
   /*
 

@@ -2,11 +2,15 @@
 {% block content %}
   <h1>Kurssikysely</h1>
   <br>
+  <div class="alert alert-success">
+  {{message}}
+	</div>
+
   <p>
     <a href="{{base_path}}/listaus" class="btn btn-success">Vastaa kyselyyn</a>
     <a href="{{base_path}}/lisays/uusi" class="btn btn-success">Lisää kurssi (testaus)</a>
     <a href="{{base_path}}/muokkaus/valitse" class="btn btn-success">Muokkaa tai poista kurssi (testaus)</a>
-    <a href="#" class="btn btn-success">Kirjaudu</a>
+    <a href="{{base_path}}/kirjautuminen" class="btn btn-success">Kirjaudu</a>
   </p>
 
 
