@@ -32,6 +32,24 @@ class Käyttäjä extends BaseModel{
 
 	}
 
+	public static function find($id){
+		$query =DB::connection()->prepare('SELECT * FROM Käyttäjä WHERE käyttäjä_id = :id LIMIT 1');
+		$query->execute(array('id'=>$id));
+		$row = $query->fetch();
+
+		if($row){
+			$käyttäjä = new Käyttäjä(array(
+				'nimi'=> $row['nimi'],
+				'salasana'=> $row['salasana'],
+				'käyttäjä_id'=> $row['käyttäjä_id'],
+				'käyttöoikeus'=> $row['käyttöoikeus']
+			));
+
+		return $käyttäjä;
+		}
+
+
+	}
 
 
 }
