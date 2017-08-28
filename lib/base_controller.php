@@ -16,12 +16,19 @@
     public static function check_logged_in(){
       // Toteuta kirjautumisen tarkistus tähän.
       // Jos käyttäjä ei ole kirjautunut sisään, ohjaa hänet toiselle sivulle (esim. kirjautumissivulle).
-      $käyttäjä=self::get_user_logged_in();
-      if($käyttäjä){
-        return true;
-      } else{
-        return false;
-      }
+        if(!isset($_SESSION['user'])){
+          Redirect::to('/kirjautuminen', array('message' => 'Kirjaudu ensin sisään!'));
+        }
+
+
+
+
+      //$käyttäjä=self::get_user_logged_in();
+      //if($käyttäjä){
+      //  return true;
+      //} else{
+      //  return false;
+      //}
     
     }
 

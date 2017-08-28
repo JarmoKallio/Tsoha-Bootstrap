@@ -9,10 +9,12 @@ class KurssiController extends BaseController{
 	}
 
 	public static function create(){
+		self::check_logged_in();
 		View::make('lisays/lisääkurssi.html');
 	}
 
 	public static function store(){
+		self::check_logged_in();
     $params = $_POST;
 
     $attributes = array(
@@ -62,18 +64,24 @@ class KurssiController extends BaseController{
 	//muokkaus- ja poistotoiminnot
 
 	public static function edit($id){
-	$kurssi = Kurssi::findID($id);
+		self::check_logged_in();
+
+		$kurssi = Kurssi::findID($id);
     View::make('muokkaus/muokkaa_tai_poista_kurssi.html', array('kurssi' => $kurssi));
   	}
 
 
-  	public static function change_kurssi_parameters($id){
+  public static function change_kurssi_parameters($id){
+  	self::check_logged_in();
+  
   	$attributes = Kurssi::findID($id);
-	View::make('muokkaus/muutos/muokkaa_kurssia.html', array('attributes' => $attributes));
+		View::make('muokkaus/muutos/muokkaa_kurssia.html', array('attributes' => $attributes));
+	
 	}
 
 
-  	public static function update($id){
+  public static function update($id){
+    self::check_logged_in();
     $params = $_POST;
 
     $attributes = array(
@@ -83,7 +91,7 @@ class KurssiController extends BaseController{
       );
 
     $kurssi = new Kurssi($attributes);
-	$errors = $kurssi->errors();
+		$errors = $kurssi->errors();
 
     if(count($errors) > 0){
       View::make('muokkaus/muutos/muokkaa_kurssia.html', array('errors' => $errors, 'attributes' => $attributes));
@@ -100,6 +108,8 @@ class KurssiController extends BaseController{
   }
 
   public static function delete($id){
+    self::check_logged_in();
+
     $kurssi = new Kurssi(array('kurssi_id' => $id));
     $kurssi->delete();
 
@@ -108,7 +118,9 @@ class KurssiController extends BaseController{
 
 
 	public static function indexForEditing(){
-			//kaikki kurssit tietokannasta
+		self::check_logged_in();
+		
+		//kaikki kurssit tietokannasta
 		$kurssit = Kurssi::all();
 		View::make('muokkaus/valitse_kurssi.html', array('kurssit' =>$kurssit));
 

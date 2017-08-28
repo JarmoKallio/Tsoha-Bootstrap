@@ -67,7 +67,9 @@
   KäyttäjäController::handle_signIn();
   });
 
-
+  $routes->post('/uloskirjautuminen', function(){
+  KäyttäjäController::logout();
+  });
 
 
 

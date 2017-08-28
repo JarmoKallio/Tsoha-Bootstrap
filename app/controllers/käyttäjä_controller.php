@@ -20,6 +20,11 @@ class KäyttäjäController extends BaseController{
     }
   }
 
+  public static function logout(){
+    $_SESSION['user'] = null;
+    Redirect::to('/kirjautuminen', array('message' => 'Olet kirjautunut ulos!'));
+  }
+
 
 
 }
