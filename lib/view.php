@@ -18,6 +18,15 @@
           $content['user_logged_in'] = BaseController::get_user_logged_in();
         }
 
+
+
+
+
+        //tarkistetaan käyttäjän käyttöoikeus
+        if(method_exists('BaseController', 'get_user_rights')){
+          $content['user_rights'] = BaseController::get_user_rights();
+        }
+
         // Tulostetaan Twig:n renderöimä näkymä
         echo $twig->render($view, $content);
       } catch (Exception $e){

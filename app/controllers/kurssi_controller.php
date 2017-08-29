@@ -5,37 +5,7 @@ class KurssiController extends BaseController{
 	public static function index(){
 	//kaikki kurssit tietokannasta
 		$kurssit = Kurssi::all();
-		View::make('listaus/kurssi.html', array('kurssit' =>$kurssit));
-	}
-
-	public static function create(){
-		self::check_logged_in();
-		View::make('lisays/lisääkurssi.html');
-	}
-
-	public static function store(){
-		self::check_logged_in();
-    $params = $_POST;
-
-    $attributes = array(
-      'nimi' => $params['nimi'],
-      'laitos' => $params['laitos']
-      );
-
-    // Alustetaan uusi Kurssi olio käyttäjän syöttämistä arvoista
-    $kurssi = new Kurssi($attributes);
-	$errors = $kurssi->errors();
-
-	if(count($errors) == 0){
-		 // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
-    $kurssi->save();
-    
-    //polku minne mennään ilmoituksen jälkeen
-    $path='/lisays/uusi';
-    Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan','path'=>$path));		
-		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
-	}else{
-		View::make('/lisays/lisääkurssi.html', array('errors' => $errors, 'attributes' => $attributes));	}
+	View::make('listaus/kurssi.html', array('kurssit' =>$kurssit));
 	}
 
 	public static function answerquestions($id){
@@ -61,10 +31,49 @@ class KurssiController extends BaseController{
 	}
 
 
+	//SUUNNITTELIJAN toimintoja (vaaditaan suunnittelijan käyttöoikeudet)
+
+	public static function create(){
+		self::check_logged_in();
+		self::verify_user_right_is(1);
+
+		View::make('lisays/lisääkurssi.html');
+	}
+
+	public static function store(){
+		self::check_logged_in();
+		self::verify_user_right_is(1);
+
+    $params = $_POST;
+
+    $attributes = array(
+      'nimi' => $params['nimi'],
+      'laitos' => $params['laitos']
+      );
+
+    // Alustetaan uusi Kurssi olio käyttäjän syöttämistä arvoista
+    $kurssi = new Kurssi($attributes);
+		$errors = $kurssi->errors();
+
+		if(count($errors) == 0){
+			// Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
+    	$kurssi->save();
+    
+    	//polku minne mennään ilmoituksen jälkeen
+    	$path='/lisays/uusi';
+    	Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan','path'=>$path));		
+		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
+		} else {
+			View::make('/lisays/lisääkurssi.html', array('errors' => $errors, 'attributes' => $attributes));	
+		}
+	}
+
+
 	//muokkaus- ja poistotoiminnot
 
 	public static function edit($id){
 		self::check_logged_in();
+		self::verify_user_right_is(1);
 
 		$kurssi = Kurssi::findID($id);
     View::make('muokkaus/muokkaa_tai_poista_kurssi.html', array('kurssi' => $kurssi));
@@ -73,6 +82,7 @@ class KurssiController extends BaseController{
 
   public static function change_kurssi_parameters($id){
   	self::check_logged_in();
+  	self::verify_user_right_is(1);
   
   	$attributes = Kurssi::findID($id);
 		View::make('muokkaus/muutos/muokkaa_kurssia.html', array('attributes' => $attributes));
@@ -82,6 +92,8 @@ class KurssiController extends BaseController{
 
   public static function update($id){
     self::check_logged_in();
+		self::verify_user_right_is(1);
+
     $params = $_POST;
 
     $attributes = array(
@@ -101,14 +113,12 @@ class KurssiController extends BaseController{
 
       $path = '/muokkaus/valitse';
       Redirect::to('/lisays/esittely', array('message' => 'Kurssin tiedot on päivitetty!', 'path'=>$path));
-
-
-      //Redirect::to('/game/' . $kurssi->kurssi_id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
     }
   }
 
   public static function delete($id){
     self::check_logged_in();
+    self::verify_user_right_is(1);
 
     $kurssi = new Kurssi(array('kurssi_id' => $id));
     $kurssi->delete();
@@ -119,6 +129,7 @@ class KurssiController extends BaseController{
 
 	public static function indexForEditing(){
 		self::check_logged_in();
+		self::verify_user_right_is(1);
 		
 		//kaikki kurssit tietokannasta
 		$kurssit = Kurssi::all();

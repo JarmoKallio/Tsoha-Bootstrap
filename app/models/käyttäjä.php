@@ -7,7 +7,7 @@ class Käyttäjä extends BaseModel{
 
 	public function __construct($attributes){
     parent::__construct($attributes);
-  }
+  	}
 
 	public static function authenticate($nimi, $salasana){
 		$query = DB::connection()->prepare('SELECT * FROM Käyttäjä WHERE nimi = :nimi AND salasana = :salasana LIMIT 1');
