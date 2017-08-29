@@ -46,4 +46,13 @@
 
     }
 
+    public static function is_it_user($id){
+      if(isset($_SESSION['user'])){
+        $user_id = $_SESSION['user'];
+        if($user_id==$id){
+          return true;
+        }  
+        return false;
+      }
+    }
   }

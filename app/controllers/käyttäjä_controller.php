@@ -82,19 +82,29 @@ class KäyttäjäController extends BaseController{
   
   }
 
-
   public static function update($id){
     self::check_logged_in();
     self::verify_user_right_is(1);
+    $is_it_user = self::is_it_user($id);
 
     $params = $_POST;
 
-    $attributes = array(
+    //käyttäjä ei voi muuttaa omaa käyttöoikeuttaan
+    if($is_it_user){
+      $attributes = array(
+      'nimi' => $params['nimi'],
+      'salasana' => $params['salasana'],
+      'kayttooikeus' => 1,
+      'kayttaja_id' => $id
+      );
+    } else {
+      $attributes = array(
       'nimi' => $params['nimi'],
       'salasana' => $params['salasana'],
       'kayttooikeus' => $params['kayttooikeus'],
       'kayttaja_id' => $id
       );
+    }
 
     $käyttäjä = new Käyttäjä($attributes);
     $errors = $käyttäjä->errors();
@@ -113,11 +123,18 @@ class KäyttäjäController extends BaseController{
   public static function delete($id){
     self::check_logged_in();
     self::verify_user_right_is(1);
+    $is_it_user = self::is_it_user($id);
 
-    $käyttäjä = new Käyttäjä(array('kayttaja_id' => $id));
-    $käyttäjä -> delete();
+    if($is_it_user){
+      //käyttäjä ei voi poistaa itseään
+      View::make('/muokkaus/poisto/käyttäjä_poistettu.html', array('message' => 'Et voi poistaa itseäsi!'));
+    } else {
+      $käyttäjä = new Käyttäjä(array('kayttaja_id' => $id));
+      $käyttäjä -> delete();
 
-    View::make('/muokkaus/poisto/käyttäjä_poistettu.html', array('message' => 'Käyttäjä on poistettu tietokannasta!'));
+      View::make('/muokkaus/poisto/käyttäjä_poistettu.html', array('message' => 'Käyttäjä on poistettu tietokannasta!'));
+
+    }
   }
 
 
