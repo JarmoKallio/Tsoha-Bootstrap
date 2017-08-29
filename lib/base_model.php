@@ -76,4 +76,34 @@
       return $errors;
     }
 
+    public function validate_kayttooikeus(){
+      $errors = array();
+      if($this->kayttooikeus == '' || $this->kayttooikeus == null){
+        $errors[] = 'Käyttöoikeus ei saa olla tyhjä!';
+        }
+
+      if(!($this->kayttooikeus == 0 || $this->kayttooikeus == 1)){
+        $errors[] = 'Käyttöoikeuden tulee olla arvoltaan 0 tai 1';
+        }
+
+      return $errors;
+    }
+
+    public function validate_salasana(){
+      $errors = array();
+      if($this->salasana == '' || $this->salasana == null){
+        $errors[] = 'Salasana ei saa olla tyhjä!';
+        }
+      
+      if(strlen($this->salasana) < 3){
+        $errors[] = 'Salasanan pituuden tulee olla vähintään kolme merkkiä!';
+        }
+
+      if(!($this->string_length_does_not_exceed($this->salasana, 100))){
+        $errors[] = 'Salasana liian pitkä!';
+        }
+
+      return $errors;
+    }
+
   }

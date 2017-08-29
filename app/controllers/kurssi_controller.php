@@ -30,8 +30,11 @@ class KurssiController extends BaseController{
 		View::make('esittely/kurssiesittely.html', array('kurssi' =>$kurssi));
 	}
 
+	//OPETTAJAN TOIMINTOJA (vaaditaan opettajan käyttöoikeudet)
 
-	//SUUNNITTELIJAN toimintoja (vaaditaan suunnittelijan käyttöoikeudet)
+
+
+	//SUUNNITTELIJAN TOIMINTOJA (vaaditaan suunnittelijan käyttöoikeudet)
 
 	public static function create(){
 		self::check_logged_in();
@@ -60,7 +63,7 @@ class KurssiController extends BaseController{
     	$kurssi->save();
     
     	//polku minne mennään ilmoituksen jälkeen
-    	$path='/lisays/uusi';
+    	$path='/lisays/uusi/kurssi';
     	Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan','path'=>$path));		
 		//Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
 		} else {
@@ -92,7 +95,7 @@ class KurssiController extends BaseController{
 
   public static function update($id){
     self::check_logged_in();
-		self::verify_user_right_is(1);
+	self::verify_user_right_is(1);
 
     $params = $_POST;
 
@@ -111,7 +114,7 @@ class KurssiController extends BaseController{
 
       $kurssi->update();
 
-      $path = '/muokkaus/valitse';
+      $path = '/muokkaus/valitse/kurssi';
       Redirect::to('/lisays/esittely', array('message' => 'Kurssin tiedot on päivitetty!', 'path'=>$path));
     }
   }

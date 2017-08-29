@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Lisää kurssi tietokantaan</h1>
+  <h1>Muokkaa käyttäjän tietoja</h1>
 
   <!--virheiden käsittely..-->
   {% if errors %}
@@ -14,24 +14,24 @@
   {% endif %}
 
 
-  <form method="post" action="{{base_path}}/lisays">
+  <form method="post" action="{{base_path}}/muokkaus/muutos/kayttaja/{{attributes.kayttaja_id}}">
     <div class="form-group">
       <label class="control-label">nimi</label>
       <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
     </div>
 
     <div class="form-group">
-      <label class="control-label">luennoitsija</label>
-      <input type="text" name="luennoitsija" class="form-control" value="{{attributes.luennoitsija}}">
+      <label class="control-label">salasana</label>
+      <input type="text" name="salasana" class="form-control" value="{{attributes.salasana}}">
     </div>
 
     <div class="form-group">
-      <label class="control-label">laitos</label>
-      <input type="text" name="laitos" class="form-control" value="{{attributes.laitos}}">
+      <label class="control-label">käyttöoikeus</label>
+      <input type="number" name="kayttooikeus" class="form-control" value="{{attributes.kayttooikeus}}">
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Lisää</button>
+      <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
     </div>
   </form>
 {% endblock %}

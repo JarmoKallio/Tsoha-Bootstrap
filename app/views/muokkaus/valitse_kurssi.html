@@ -38,7 +38,6 @@ Valitse listasta, voit myös järjestää tuloksia
         <th>Kurssi</th>
         <th>Opettaja</th>
         <th>Laitos</th>
-        <th>Aikaa vastata</th>
       </tr>
     </thead>
 
@@ -48,9 +47,8 @@ Valitse listasta, voit myös järjestää tuloksia
       <tr>
         <!--<td><a href="{{base_path}}/esittely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td> -->
         <td><a href="{{base_path}}/muokkaus/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
-        <td>tähän opettaja</td>
+        <td>opettaja</td>
         <td>{{kurssi.laitos}}</td>
-        <td>NaN</td>
       </tr>
       {% endfor %}
     </tbody>

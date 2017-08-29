@@ -39,7 +39,7 @@
         $user_id = $_SESSION['user'];
         // Pyydetään User-mallilta käyttäjä session mukaisella id:llä
         $user = Käyttäjä::find($user_id);
-        $rights = $user->käyttöoikeus;
+        $rights = $user->kayttooikeus;
 
         return $rights;
       }

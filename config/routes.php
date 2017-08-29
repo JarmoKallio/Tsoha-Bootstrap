@@ -16,8 +16,12 @@
   KurssiController::answerquestions($id);
   });
 
-  $routes->get('/lisays/uusi', function(){
+  $routes->get('/lisays/uusi/kurssi', function(){
   KurssiController::create();
+  });
+
+  $routes->get('/lisays/uusi/kayttaja', function(){
+  KäyttäjäController::create();
   });
 
   $routes->get('/lisays/esittely', function(){
@@ -28,29 +32,53 @@
   KurssiController::store();
   });
 
+  $routes->post('/lisays/kurssi', function(){
+  KäyttäjäController::store();
+  });
 
 
-  $routes->get('/muokkaus/valitse', function(){
+
+  $routes->get('/muokkaus/valitse/kurssi', function(){
   KurssiController::indexForEditing();
+  });
+
+  $routes->get('/muokkaus/valitse/kayttaja', function(){
+  KäyttäjäController::indexForEditing();
   });
 
   
 
-  $routes->get('/muokkaus/muutos/:id', function($id){
+  $routes->get('/muokkaus/muutos/kurssi/:id', function($id){
   // Kurssin muokkaaminen
   KurssiController::change_kurssi_parameters($id);
   });
 
+    $routes->get('/muokkaus/muutos/kayttaja/:id', function($id){
+  // Kurssin muokkaaminen
+  KäyttäjäController::change_käyttäjä_parameters($id);
+  });
 
 
-  $routes->get('/muokkaus/poisto/:id', function($id){
+  $routes->get('/muokkaus/poisto/kurssi/:id', function($id){
   // Kurssin poisto
   KurssiController::delete($id);
+  });
+
+  $routes->get('/muokkaus/poisto/kayttaja/:id', function($id){
+  KäyttäjäController::delete($id);
   });
 
 
   $routes->post('/muokkaus/muutos/testi/:id', function($id){
   KurssiController::update($id);
+  });
+
+  $routes->post('/muokkaus/muutos/kayttaja/:id', function($id){
+  KäyttäjäController::update($id);
+  });
+
+  $routes->get('/muokkaus/kayttaja/:id', function($id){
+  KäyttäjäController::edit($id);
   });
 
   $routes->get('/muokkaus/:id', function($id){
@@ -70,41 +98,4 @@
   $routes->post('/uloskirjautuminen', function(){
   KäyttäjäController::logout();
   });
-
-
-
-
-  /*
-
-  $routes->post('/muokkaus/poisto/:id', function($id){
-  KurssiController::update($id);
-  });
-
-
-
-
-
-
-  $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-  });
-
-  $routes->get('/etusivu', function() {
-  HelloWorldController::etusivu();
-  });
-
-  $routes->get('/esittely', function() {
-  HelloWorldController::esittely();
-  });
-
-  $routes->get('/lomakkeen_muokkaus', function() {
-  HelloWorldController::lomMuokkaus();
-  });
-
-  $routes->get('/lomakehallinta', function() {
-  HelloWorldController::lomakehallinta();
-  });
-  */
-
-  
 

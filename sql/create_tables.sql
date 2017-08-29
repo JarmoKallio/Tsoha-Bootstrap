@@ -1,10 +1,10 @@
 -- Lisää CREATE TABLE lauseet tähän tiedostoon
 
-CREATE TABLE Käyttäjä(
-  käyttäjä_id SERIAL PRIMARY KEY,
+CREATE TABLE Kayttaja(
+  kayttaja_id SERIAL PRIMARY KEY,
   nimi VARCHAR (100),
   salasana VARCHAR (100),
-  käyttöoikeus INTEGER
+  kayttooikeus INTEGER
 
 );
 
@@ -16,9 +16,9 @@ CREATE TABLE Kurssi(
 );
 
 
-CREATE TABLE LiitosKäyttäjäKurssi(
+CREATE TABLE LiitosKayttajaKurssi(
   kurssi_id INTEGER REFERENCES Kurssi(kurssi_id),
-  käyttäjä_id INTEGER REFERENCES Käyttäjä(käyttäjä_id)
+  kayttaja_id INTEGER REFERENCES Kayttaja(kayttaja_id)
 
 );
 
@@ -28,8 +28,8 @@ CREATE TABLE Kysymys(
   nimi VARCHAR (100),
   kysymysteksti VARCHAR (500),
   vastaustyyppi INTEGER,
-  välin_alku INTEGER,
-  välin_loppu INTEGER
+  valin_alku INTEGER,
+  valin_loppu INTEGER
 
 );
 
