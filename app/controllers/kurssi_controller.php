@@ -140,4 +140,14 @@ class KurssiController extends BaseController{
 
 	}
 
+	public static function confirmDelete($id){
+		self::check_logged_in();
+		self::verify_user_right_is(1);
+
+		$attributes = array(
+      'kurssi_id' => $id
+    );
+		View::make('muokkaus/varmistusKurssi.html', array('attributes' => $attributes));
+	}
+
 }

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="alert alert-success">
+  <p>Oletko varma, poistotoimintoa ei voi peruuttaa.</p>
+</div>
+
+<a href="{{base_path}}/muokkaus/poisto/kurssi/varmistus/{{attributes.kurssi_id}}" class="btn btn-success">Poista</a>
+{% endblock %}

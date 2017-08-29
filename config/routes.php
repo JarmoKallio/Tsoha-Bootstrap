@@ -61,10 +61,20 @@
 
   $routes->get('/muokkaus/poisto/kurssi/:id', function($id){
   // Kurssin poisto
+  KurssiController::confirmDelete($id);
+  });
+
+  $routes->get('/muokkaus/poisto/kurssi/varmistus/:id', function($id){
+  // Kurssin poisto
   KurssiController::delete($id);
   });
 
+
   $routes->get('/muokkaus/poisto/kayttaja/:id', function($id){
+  KäyttäjäController::confirmDelete($id);
+  });
+
+  $routes->get('/muokkaus/poisto/kayttaja/varmistus/:id', function($id){
   KäyttäjäController::delete($id);
   });
 

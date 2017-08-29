@@ -120,6 +120,16 @@ class KäyttäjäController extends BaseController{
     }
   }
 
+  public static function confirmDelete($id){
+    self::check_logged_in();
+    self::verify_user_right_is(1);
+
+    $attributes = array(
+      'kayttaja_id' => $id
+      );
+    View::make('muokkaus/varmistusKäyttäjä.html', array('attributes' => $attributes));
+  }
+
   public static function delete($id){
     self::check_logged_in();
     self::verify_user_right_is(1);
@@ -131,6 +141,7 @@ class KäyttäjäController extends BaseController{
     } else {
       $käyttäjä = new Käyttäjä(array('kayttaja_id' => $id));
       $käyttäjä -> delete();
+
 
       View::make('/muokkaus/poisto/käyttäjä_poistettu.html', array('message' => 'Käyttäjä on poistettu tietokannasta!'));
 

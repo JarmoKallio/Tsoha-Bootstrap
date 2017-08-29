@@ -10,13 +10,11 @@
     {% if user_logged_in %}
     {% if user_rights == 1 %}
 
-    <a href="{{base_path}}/lisays/uusi/kurssi" class="btn btn-success">Lisää kurssi</a>
-    <a href="{{base_path}}/muokkaus/valitse/kurssi" class="btn btn-success">Muokkaa tai poista kursseja</a>
-
-    <a href="{{base_path}}/lisays/uusi/kayttaja" class="btn btn-success">Lisää käyttäjä</a>
+    <a href="{{base_path}}/muokkaus/valitse/kurssi" class="btn btn-success">Hallinnoi kursseja ja kyselylomakkeita</a>
     <a href="{{base_path}}/muokkaus/valitse/kayttaja" class="btn btn-success">Muokkaa tai poista käyttäjiä</a>
-
     <a href="{{base_path}}/" class="btn btn-success">Tee yhteenvetokyselyjä</a>
+    <a href="{{base_path}}/lisays/uusi/kurssi" class="btn btn-success">Lisää kurssi</a>
+    <a href="{{base_path}}/lisays/uusi/kayttaja" class="btn btn-success">Lisää käyttäjä</a>
 
     {% else %}
     <a href="#" class="btn btn-success">Tarkastele raportteja</a>
