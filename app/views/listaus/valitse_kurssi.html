@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>löydä kurssisi</h1>
+  <h1>Valitse kurssi listasta</h1>
   <p>
-    Etsi käymäsi kurssi ja vastaa kyselyyn:
+    Haku tietokannasta:
   </p>
 
   <form>
@@ -36,7 +36,6 @@ Valitse listasta, voit myös järjestää tuloksia
     <thead>
       <tr>
         <th>Kurssi</th>
-        <th>Opettaja</th>
         <th>Laitos</th>
       </tr>
     </thead>
@@ -45,11 +44,8 @@ Valitse listasta, voit myös järjestää tuloksia
       <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
       {% for kurssi in kurssit%}
       <tr>
-        <!--<td><a href="{{base_path}}/esittely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td> -->
-        <td><a href="{{base_path}}/esittely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
-        <td>opettaja</td>
+        <td><a href="{{base_path}}/muokkaus/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
         <td>{{kurssi.laitos}}</td>
-        <td>NaN</td>
       </tr>
       {% endfor %}
     </tbody>

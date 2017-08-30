@@ -118,3 +118,16 @@
   $routes->post('/listaus/lisaa_tai_poista_kurssilta/:id', function($id){
   KäyttäjäController::addTeacherForCourse($id);
   });
+
+  $routes->get('/omatKurssini', function(){
+  KurssiController::selectOwnCourse();
+  });
+
+  //kyselylomakkeen muokkaus
+  $routes->get('/muokkaus/kyselylomake/:id', function(){
+  KysymysController::editPoll($id);
+  });
+
+  $routes->get('/muokkaus/kyselylomake/muutos/:id', function(){
+  KysymysController::createQuestion($id);
+  });

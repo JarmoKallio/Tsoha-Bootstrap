@@ -27,17 +27,15 @@ CREATE TABLE Kysymys(
   kurssi_id INTEGER REFERENCES Kurssi(kurssi_id),
   nimi VARCHAR (100),
   kysymysteksti VARCHAR (500),
-  vastaustyyppi INTEGER,
-  valin_alku INTEGER,
-  valin_loppu INTEGER
+  vastaustyyppi INTEGER
 
 );
 
 CREATE TABLE Vastaus(
+  vastaus_id SERIAL PRIMARY KEY,
   kysymys_id INTEGER REFERENCES Kysymys(kysymys_id),
   vastaaja_id INTEGER ,
   vastausteksti VARCHAR (500),
-  num_vastaus INTEGER,
   likert_vastaus INTEGER
 
 );

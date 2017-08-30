@@ -133,7 +133,7 @@ class KurssiController extends BaseController{
 	public static function indexForEditing(){
 		self::check_logged_in();
 		self::verify_user_right_is(1);
-		
+
 		//kaikki kurssit tietokannasta
 		$kurssit = Kurssi::all();
 		View::make('muokkaus/valitse_kurssi.html', array('kurssit' =>$kurssit));
@@ -145,10 +145,19 @@ class KurssiController extends BaseController{
 		self::verify_user_right_is(1);
 
 		$attributes = array(
-      'kurssi_id' => $id
-    );
+      		'kurssi_id' => $id
+    	);
 		View::make('muokkaus/varmistusKurssi.html', array('attributes' => $attributes));
 	}
+
+	public static function selectOwnCourse(){
+    self::check_logged_in();
+    $kayttaja = self::get_user_logged_in();
+    $kayttaja_id = $kayttaja->kayttaja_id;
+
+    $kurssit = Kurssi::selectUsersCourses($kayttaja_id);
+    View::make('listaus/valitse_oma_kurssi.html', array('kurssit' => $kurssit));
+  }
 
 
 }

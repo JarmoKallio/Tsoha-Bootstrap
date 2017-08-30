@@ -97,10 +97,13 @@ class Käyttäjä extends BaseModel{
   }
 
   public function delete(){
-    $query = DB::connection()->prepare('DELETE FROM Kayttaja WHERE kayttaja_id = :kayttaja_id');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+  	//ensiksi liitostaulusta pois käyttäjään viittaavat rivit
+  	$query = DB::connection()->prepare('DELETE FROM liitoskayttajakurssi WHERE kayttaja_id = :kayttaja_id');
     $query->execute(array('kayttaja_id' => $this->kayttaja_id));
-    $row = $query->fetch();
+
+    //sitten voidaan poistaa itse käyttäjä
+    $query = DB::connection()->prepare('DELETE FROM Kayttaja WHERE kayttaja_id = :kayttaja_id');
+    $query->execute(array('kayttaja_id' => $this->kayttaja_id));
   }
 
   public static function selectTeachersForCourse($kurssi_id){

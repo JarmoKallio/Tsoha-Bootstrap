@@ -64,34 +64,49 @@ class Kurssi extends BaseModel{
 	}
 
 	public function save(){
-    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
     $query = DB::connection()->prepare('INSERT INTO Kurssi (nimi, laitos) VALUES (:nimi, :laitos) RETURNING kurssi_id');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
     $query->execute(array('nimi' => $this->nimi, 'laitos' => $this->laitos));
-    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
     $row = $query->fetch();
-    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->kurssi_id = $row['kurssi_id'];
   	}
 
 
-  	public function update(){
-    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+  public function update(){
     $query = DB::connection()->prepare('UPDATE Kurssi SET nimi = :nimi, laitos =:laitos WHERE kurssi_id = :kurssi_id');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
     $query->execute(array('nimi' => $this->nimi, 'laitos' => $this->laitos, 'kurssi_id' => $this->kurssi_id));
     $row = $query->fetch();
-  	}
+  }
 
-  	public function delete(){
-    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+  public function delete(){
+  	//poistetaan ensin liitostaulusta kurssiin viittaavat rivit
+    $query = DB::connection()->prepare('DELETE FROM liitoskayttajakurssi WHERE kurssi_id = :kurssi_id');
+    $query->execute(array('kurssi_id' => $this->kurssi_id));
+
     $query = DB::connection()->prepare('DELETE FROM Kurssi WHERE kurssi_id = :kurssi_id');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
     $query->execute(array('kurssi_id' => $this->kurssi_id));
-    $row = $query->fetch();
-  	}
+  }
 
+  public static function selectUsersCourses($kayttaja_id){
 
+		$query =DB::connection()->prepare('SELECT DISTINCT kurssi.nimi as nimi, kurssi.laitos as laitos, kurssi.kurssi_id as kurssi_id FROM Kurssi, liitoskayttajakurssi, kayttaja WHERE kurssi.kurssi_id = liitoskayttajakurssi.kurssi_id AND liitoskayttajakurssi.kayttaja_id = :lauseke');
+		$query->execute(array('lauseke' => $kayttaja_id));
+		
+		$rows = $query->fetchAll();
+
+		$kurssit = array();
+
+		foreach($rows as $row){
+			$kurssit[] = new Kurssi(array(
+				'nimi'=> $row['nimi'],
+				'laitos'=> $row['laitos'],
+				'kurssi_id'=> $row['kurssi_id']
+			));
+		}		
+
+		return $kurssit;
+
+  }
 
 
 }

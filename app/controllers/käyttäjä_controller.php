@@ -173,10 +173,9 @@ class KäyttäjäController extends BaseController{
     self::verify_user_right_is(1);
 
     $params = $_POST;
-
     $attributes = array('kayttaja_id' => $params['kayttaja_id'], 'kurssi_id' => $kurssi_id);
 
-    if($params['selected'] == 'X'){ //ehkä hieman hassu tapa laittaa ei booleanina
+    if($params['selected'] == 'X'){ //ehkä hieman hassu tapa laittaa selected merkkinä, helpotti sivun tekoa
       Käyttäjä::removeTeacherFromCourse($attributes);
     } else {
       Käyttäjä::addTeacherForCourse($attributes);
@@ -187,6 +186,7 @@ class KäyttäjäController extends BaseController{
 
     View::make('listaus/valitse_opettajat_kurssille.html', array('käyttäjät' =>$käyttäjät, 'kurssi_id' => $kurssi_id));
   }
+
 
 
 }
