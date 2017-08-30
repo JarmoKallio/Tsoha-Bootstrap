@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>
-    Valitse oma kurssi:
-  </p>
+<p>
+Vastataksesi kyselyyn, valitse kurssisi listasta:
+</p>
+
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -15,7 +16,7 @@
       <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
       {% for kurssi in kurssit%}
       <tr>
-        <td><a href="{{base_path}}/muokkaus/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
+        <td><a href="{{base_path}}/listaus/kysely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
         <td>{{kurssi.laitos}}</td>
       </tr>
       {% endfor %}

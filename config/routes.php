@@ -9,7 +9,7 @@
   });
 
   $routes->get('/listaus', function() {
-  KurssiController::index();
+  KurssiController::indexForStudent();
   });
 
   $routes->get('/esittely/:id', function($id) {
@@ -24,8 +24,8 @@
   KäyttäjäController::create();
   });
 
-  $routes->get('/lisays/esittely', function(){
-  KurssiController::show();
+  $routes->get('/listaus/kysely/:id', function($id){
+  KurssiController::showForStudent($id);
   });
 
   $routes->post('/lisays', function(){
@@ -124,10 +124,20 @@
   });
 
   //kyselylomakkeen muokkaus
-  $routes->get('/muokkaus/kyselylomake/:id', function(){
-  KysymysController::editPoll($id);
+  $routes->get('/muokkaus/kyselylomake/:id/:errors', function($id, $errors){
+  KysymysController::editPoll($id, $errors);
   });
 
-  $routes->get('/muokkaus/kyselylomake/muutos/:id', function(){
+  $routes->post('/muokkaus/kyselylomake/muutos/:id', function($id){
   KysymysController::createQuestion($id);
+  });
+
+  $routes->get('/muokkaus/kyselylomake/poista_kysymys/:kurssi_id/:kysymys_id', function($kurssi_id, $kysymys_id){
+  KysymysController::deleteQuestion($kurssi_id, $kysymys_id);
+  });
+
+
+  //kyselylomakkeen julkaisu
+  $routes->get('/kyselylomake/julkaisu/:id', function($id){
+  KurssiController::setPollOpened($id);
   });

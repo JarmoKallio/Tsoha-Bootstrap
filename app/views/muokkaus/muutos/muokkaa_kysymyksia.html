@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Muokkaa kysymyslomaketta</h1>
+  <h1>Muokkaa kyselylomaketta</h1>
 
   <!--virheiden käsittely..-->
   {% if errors %}
@@ -15,18 +15,47 @@
 
 
 {% for kysymys in kysymykset%}
-  <form method="post" action="{{base_path}}/muokkaus/kyselylomake/muutos/{{attributes.kurssi_id}}">
+  <form method="post" action="{{base_path}}/muokkaus/kyselylomake/muutos/{{kurssi_id}}">
     <div class="form-group">
-      <label class="control-label">{{kysymys.nimi}}</label>
-      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
-      
-      <input type="radio" name="vastaustyyppi" value="{{attributes.nimi}}">
-      <input type="radio" name="vastaustyyppi" value="{{attributes.nimi}}">
+      <input type="text" name="nimi" class="form-control" value="{{kysymys.nimi}}">Kysymyksen otsikko
+      <br>
+      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti
+      <br>
+
+      {% if kysymys.vastaustyyppi|lower starts with 't' %}
+      <input type="radio" name="vastaustyyppi" value="teksti" CHECKED/>teksti vastaus
+      <input type="radio" name="vastaustyyppi" value="likert">likert vastaus
+      {% else %}
+      <input type="radio" name="vastaustyyppi" value="teksti" >teksti vastaus
+      <input type="radio" name="vastaustyyppi" value="likert" CHECKED/>likert vastaus
+      {% endif %}
 
       <button type="submit" class="btn btn-primary">Tallenna</button>
-      <button type="submit" class="btn btn-primary">Poista</button>
+      <a href="{{base_path}}/muokkaus/kyselylomake/poista_kysymys/{{kurssi_id}}/{{kysymys.kysymys_id}}" class="btn btn-danger">Poista</a>
     </div>
   </form>
 {% endfor %}
+  <form method="post" action="{{base_path}}/muokkaus/kyselylomake/muutos/{{kurssi_id}}">
+    <div class="form-group">
+      <input type="text" name="nimi" class="form-control" value="{{kysymys.nimi}}">Kysymyksen otsikko
+      <br>
+      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti
+      <br>
 
-{% endblock %}
+      {% if kysymys.vastaustyyppi|lower starts with 't' %}
+      <input type="radio" name="vastaustyyppi" value="teksti" CHECKED/>teksti vastaus
+      <input type="radio" name="vastaustyyppi" value="likert">likert vastaus
+      {% else %}
+      <input type="radio" name="vastaustyyppi" value="teksti" >teksti vastaus
+      <input type="radio" name="vastaustyyppi" value="likert" CHECKED/>likert vastaus
+      {% endif %}
+
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+  </form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <a href="{{base_path}}/muokkaus/{{kurssi_id}}" class="btn btn-success">Valmis</a>
+  {% endblock %}

@@ -5,7 +5,12 @@ class KurssiController extends BaseController{
 	public static function index(){
 	//kaikki kurssit tietokannasta
 		$kurssit = Kurssi::all();
-	View::make('listaus/kurssi.html', array('kurssit' =>$kurssit));
+		View::make('listaus/valitse_kurssi.html', array('kurssit' =>$kurssit));
+	}
+
+	public static function indexForStudent(){
+		$kurssit = Kurssi::all();
+		View::make('listaus/opiskelija_valitse_kurssi.html', array('kurssit' =>$kurssit));
 	}
 
 	public static function answerquestions($id){
@@ -27,7 +32,7 @@ class KurssiController extends BaseController{
 		//pitää lisää varmistus että löytyy, tähän ja kurssin haku metodiin
 		$kurssi = Kurssi::findID($id);
 		
-		View::make('esittely/kurssiesittely.html', array('kurssi' =>$kurssi));
+		View::make('esittely/kurssikysely.html', array('kurssi' =>$kurssi));
 	}
 
 	//OPETTAJAN TOIMINTOJA (vaaditaan opettajan käyttöoikeudet)
@@ -156,8 +161,19 @@ class KurssiController extends BaseController{
     $kayttaja_id = $kayttaja->kayttaja_id;
 
     $kurssit = Kurssi::selectUsersCourses($kayttaja_id);
-    View::make('listaus/valitse_oma_kurssi.html', array('kurssit' => $kurssit));
+    View::make('listaus/valitse_kurssi.html', array('kurssit' => $kurssit));
   }
 
+  public static function setPollOpened($kurssi_id){
+    self::check_logged_in();
+    self::verify_user_right_is(1);
+
+    $attributes = Kurssi::findID($kurssi_id);
+    $attributes->julkaistu = true;
+    $kurssi = new Kurssi($attributes);
+    $kurssi->setOpened();
+    self::edit($kurssi_id);
+    
+  }
 
 }

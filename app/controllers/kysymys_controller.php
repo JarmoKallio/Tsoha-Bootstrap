@@ -29,32 +29,32 @@ class KysymysController extends BaseController{
 
     if(count($errors) == 0){
       $kysymys->save();
-      self::editPoll($kurssi_id);
+      self::editPoll($kurssi_id, 0);
     } else {
-    	self::editPoll($kurssi_id);
+    	self::editPoll($kurssi_id, $errors);
     	//View::make('/lisays/lisääkurssi.html', array('errors' => $errors, 'attributes' => $attributes))
     }
 	}
 
-  public static function deleteQuestion($kysymys_id){
+  public static function deleteQuestion($kurssi_id, $kysymys_id){
     self::check_logged_in();
     self::verify_user_right_is(1);
 
     $kysymys = new Kysymys(array('kysymys_id' => $kysymys_id));
     $kysymys->delete();
 
-    View::make('/x.html');
+    self::editPoll($kurssi_id, 0);
   }
 
 
   //lomakehallinta
-  public static function editPoll($kurssi_id){
+  public static function editPoll($kurssi_id, $errors){
   	self::check_logged_in();
     self::verify_user_right_is(1);
 
     $kysymykset = self::index($kurssi_id);
 
-    View::make('muokkaus/muutos/muuta_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id));
+    View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $errors));
   }
 
 }

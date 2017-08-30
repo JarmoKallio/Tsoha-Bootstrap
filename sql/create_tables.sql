@@ -11,7 +11,9 @@ CREATE TABLE Kayttaja(
 CREATE TABLE Kurssi(
   kurssi_id SERIAL PRIMARY KEY,
   nimi VARCHAR (100),
-  laitos VARCHAR (100)
+  laitos VARCHAR (100),
+  julkaistu BOOLEAN,
+  suljettu BOOLEAN
 
 );
 
@@ -27,7 +29,7 @@ CREATE TABLE Kysymys(
   kurssi_id INTEGER REFERENCES Kurssi(kurssi_id),
   nimi VARCHAR (100),
   kysymysteksti VARCHAR (500),
-  vastaustyyppi INTEGER
+  vastaustyyppi VARCHAR (20)
 
 );
 

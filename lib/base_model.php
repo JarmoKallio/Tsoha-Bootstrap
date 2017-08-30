@@ -106,4 +106,22 @@
       return $errors;
     }
 
+    public function validate_kysymysteksti(){
+      $errors = array();
+      if($this->kysymysteksti == '' || $this->kysymysteksti == null){
+        $errors[] = 'Kysymysteksti ei saa olla tyhjä!';
+        }
+      
+      if(strlen($this->kysymysteksti) < 3){
+        $errors[] = 'Kysymystekstin pituuden tulee olla vähintään kolme merkkiä!';
+        }
+
+      if(!($this->string_length_does_not_exceed($this->kysymysteksti, 100))){
+        $errors[] = 'Kysymysteksti liian pitkä!';
+        }
+
+      return $errors;
+    }
+
+
   }

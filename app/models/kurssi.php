@@ -2,7 +2,7 @@
 
 class Kurssi extends BaseModel{
 
-	public $nimi, $laitos, $kurssi_id;
+	public $nimi, $laitos, $kurssi_id, $julkaistu, $suljettu;
 
 	public function __construct($attributes){
     parent::__construct($attributes);
@@ -74,6 +74,12 @@ class Kurssi extends BaseModel{
   public function update(){
     $query = DB::connection()->prepare('UPDATE Kurssi SET nimi = :nimi, laitos =:laitos WHERE kurssi_id = :kurssi_id');
     $query->execute(array('nimi' => $this->nimi, 'laitos' => $this->laitos, 'kurssi_id' => $this->kurssi_id));
+    $row = $query->fetch();
+  }
+
+  public function setOpened(){
+    $query = DB::connection()->prepare('UPDATE Kurssi SET julkaistu = :julkaistu WHERE kurssi_id = :kurssi_id');
+    $query->execute(array('julkaistu' => $this->julkaistu, 'kurssi_id' => $this->kurssi_id));
     $row = $query->fetch();
   }
 
