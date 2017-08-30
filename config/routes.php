@@ -109,3 +109,12 @@
   KäyttäjäController::logout();
   });
 
+  //opettajien valinta listasta kurssin pitäjiksi
+
+  $routes->get('/valitse/opettajat/:id', function($id){
+  KäyttäjäController::selectTeachersForCourse($id);
+  });
+
+  $routes->post('/listaus/lisaa_tai_poista_kurssilta/:id', function($id){
+  KäyttäjäController::addTeacherForCourse($id);
+  });

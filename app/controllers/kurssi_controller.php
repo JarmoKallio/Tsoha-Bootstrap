@@ -150,4 +150,5 @@ class KurssiController extends BaseController{
 		View::make('muokkaus/varmistusKurssi.html', array('attributes' => $attributes));
 	}
 
+
 }

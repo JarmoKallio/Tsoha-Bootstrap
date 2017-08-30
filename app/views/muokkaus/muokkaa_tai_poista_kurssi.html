@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Muokkaus</h1>
+  <h2>{{kurssi.nimi}}</h2
   <p>
-    {{kurssi.nimi}}
     <br>
-    <a href="{{base_path}}/muokkaus/muutos/kurssi/{{kurssi.kurssi_id}}" class="btn btn-success">Lisää tai poista opettaja kurssilta</a>
-
-    <a href="#" class="btn btn-danger">Muokkaa kyselylomaketta</a>
-    <a href="#" class="btn btn-danger">Julkaise kyselylomake</a>
-    <a href="#" class="btn btn-danger">Sulje kyselylomake</a>
-
-    <a href="{{base_path}}/muokkaus/muutos/kurssi/{{kurssi.kurssi_id}}" class="btn btn-success">Muuta tietoja</a>
+    <p>Hallinnoi kyselylomaketta:</p>
+    <br>
+    <a href="#" class="btn btn-success">Muokkaa kyselylomaketta</a>
+    <a href="#" class="btn btn-success">Julkaise kyselylomake</a>
+    <a href="#" class="btn btn-success">Sulje kyselylomake</a>
+	
+	<br>
+	<br>
+	<br>
+    <p>Hallinnoi kurssia:</p>
+    <br>
+	<a href="{{base_path}}/valitse/opettajat/{{kurssi.kurssi_id}}" class="btn btn-success">Lisää tai poista opettajia</a>
+    <a href="{{base_path}}/muokkaus/muutos/kurssi/{{kurssi.kurssi_id}}" class="btn btn-success">Muuta kurssin tietoja</a>
     <a href="{{base_path}}/muokkaus/poisto/kurssi/{{kurssi.kurssi_id}}" class="btn btn-danger">Poista kurssi</a>
   </p>
 

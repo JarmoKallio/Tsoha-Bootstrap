@@ -1,7 +1,7 @@
 <?php
-
 class KäyttäjäController extends BaseController{
-	
+	//$admin =1; //suunnittelijan käyttöoikeus, tarvitaan validoinneissa
+
 	public static function signIn(){
 		View::make('kirjautuminen/kirjautumissivu.html');
 	}
@@ -153,10 +153,40 @@ class KäyttäjäController extends BaseController{
     self::check_logged_in();
     self::verify_user_right_is(1);
     
-    //kaikki kurssit tietokannasta
+    //kaikki käyttäjät tietokannasta
     $käyttäjät = Käyttäjä::all();
     View::make('muokkaus/valitse_käyttäjä.html', array('käyttäjät' =>$käyttäjät));
 
   }
+
+  public static function selectTeachersForCourse($id){
+    self::check_logged_in();
+    self::verify_user_right_is(1);
+
+    $käyttäjät = Käyttäjä::selectTeachersForCourse($id);
+
+    View::make('listaus/valitse_opettajat_kurssille.html', array('käyttäjät' =>$käyttäjät, 'kurssi_id' => $id));
+  }
+
+  public static function addTeacherForCourse($kurssi_id){
+    self::check_logged_in();
+    self::verify_user_right_is(1);
+
+    $params = $_POST;
+
+    $attributes = array('kayttaja_id' => $params['kayttaja_id'], 'kurssi_id' => $kurssi_id);
+
+    if($params['selected'] == 'X'){ //ehkä hieman hassu tapa laittaa ei booleanina
+      Käyttäjä::removeTeacherFromCourse($attributes);
+    } else {
+      Käyttäjä::addTeacherForCourse($attributes);
+    }
+
+    //haetaan päivitetty käyttäjä-lista ja palataan samaan listausnäkymään
+    $käyttäjät = Käyttäjä::selectTeachersForCourse($kurssi_id);
+
+    View::make('listaus/valitse_opettajat_kurssille.html', array('käyttäjät' =>$käyttäjät, 'kurssi_id' => $kurssi_id));
+  }
+
 
 }
