@@ -30,6 +30,26 @@ class Kurssi extends BaseModel{
 
 	}
 
+	public static function allOpenedCourses(){
+		$query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE julkaistu = :julkaistu');
+
+		$query->execute(array('julkaistu'=>true));
+		$rows=$query->fetchAll();
+		
+		$kurssit = array();
+
+		foreach($rows as $row){
+			$kurssit[] = new Kurssi(array(
+				'nimi' => $row['nimi'],
+				'laitos' => $row['laitos'],
+				'kurssi_id' => $row['kurssi_id']
+				));
+		}
+
+		return $kurssit;
+
+	}
+
 	//haku laitoksen mukaan...
 	public static function find($laitos){
 		$query =DB::connection()->prepare('SELECT * FROM Kurssi WHERE laitos like :laitos LIMIT 1');
@@ -77,7 +97,7 @@ class Kurssi extends BaseModel{
     $row = $query->fetch();
   }
 
-  public function setOpened(){
+  public function setJulkaistuParameter(){
     $query = DB::connection()->prepare('UPDATE Kurssi SET julkaistu = :julkaistu WHERE kurssi_id = :kurssi_id');
     $query->execute(array('julkaistu' => $this->julkaistu, 'kurssi_id' => $this->kurssi_id));
     $row = $query->fetch();

@@ -9,7 +9,7 @@ class KurssiController extends BaseController{
 	}
 
 	public static function indexForStudent(){
-		$kurssit = Kurssi::all();
+		$kurssit = Kurssi::allOpenedCourses();
 		View::make('listaus/opiskelija_valitse_kurssi.html', array('kurssit' =>$kurssit));
 	}
 
@@ -167,11 +167,24 @@ class KurssiController extends BaseController{
   public static function setPollOpened($kurssi_id){
     self::check_logged_in();
     self::verify_user_right_is(1);
+    
+    $julkaistu = 1;
+    self::setPollParameter($kurssi_id, $julkaistu);
+  }
 
+  public static function setPollClosed($kurssi_id){
+    self::check_logged_in();
+    self::verify_user_right_is(1);
+    
+    $julkaistu = 0;
+    self::setPollParameter($kurssi_id, $julkaistu);
+  }
+
+  public static function setPollParameter($kurssi_id, $boolean){
     $attributes = Kurssi::findID($kurssi_id);
-    $attributes->julkaistu = true;
+    $attributes->julkaistu = $boolean;
     $kurssi = new Kurssi($attributes);
-    $kurssi->setOpened();
+    $kurssi->setJulkaistuParameter();
     self::edit($kurssi_id);
     
   }

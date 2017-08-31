@@ -141,3 +141,7 @@
   $routes->get('/kyselylomake/julkaisu/:id', function($id){
   KurssiController::setPollOpened($id);
   });
+
+  $routes->get('/kyselylomake/julkaisu/sulje/:id', function($id){
+  KurssiController::setPollClosed($id);
+  });
