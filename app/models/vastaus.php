@@ -7,7 +7,7 @@ class Vastaus extends BaseModel{
 	public function __construct($attributes){
     parent::__construct($attributes);
 
-    if(isLikert_vastaus){
+    if($this->isLikert_vastaus){
     	$this->validators = array('validate_likertvastaus');
     } else{
     	$this->validators = array('validate_vastausteksti');

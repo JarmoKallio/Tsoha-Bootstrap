@@ -123,5 +123,23 @@
       return $errors;
     }
 
+    public function validate_vastausteksti(){
+      $errors = array();
+      if($this->vastausteksti == '' || $this->vastausteksti == null){
+        $errors[] = 'Vastaus ei saa olla tyhjä!';
+        }
+      
+      if(strlen($this->vastausteksti) < 3){
+        $errors[] = 'Vastauksen pituuden tulee olla vähintään kolme merkkiä!';
+        }
+
+      if(!($this->string_length_does_not_exceed($this->vastausteksti, 500))){
+        $errors[] = 'Vastaus liian pitkä! Olemme iloisia, että teillä on paljon sanottavaa, pystyisittekö hieman tiivistämään?';
+        }
+
+      return $errors;
+
+    }
+
 
   }

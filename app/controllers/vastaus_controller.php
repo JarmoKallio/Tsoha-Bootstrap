@@ -13,24 +13,9 @@ class VastausController extends BaseController{
 
   public static function saveStudentsAnswer(){
     $params = $_POST;
+    
     $kurssi_id = $params['kurssi_id']; 
     $vastaaja_id = $params['vastaaja_id'];
-    $vastattujenKysymystenIdt = Vastaus::allAnsweredQuestionsIds($vastaaja_id);
-
-    $vastaamattomatKysymykset = Kysymys::findUnanswered($kurssi_id, $vastattujenKysymystenIdt);
-
-    if($vastaamattomatKysymykset){
-      self::saveStudentsAnswerContinue($params, $vastaamattomatKysymykset);
-    } else {
-      View::make('esittely/kurssikyselyLoppu.html');
-    }
-
-
-    
-  }
-
-  public static function saveStudentsAnswerContinue($params, $vastaamattomatKysymykset){
-    $kurssi_id = $params['kurssi_id'];
     $kurssi_nimi = $params['kurssi_nimi']; 
     $kysymys_id = $params['kysymys_id']; 
     $vastaaja_id = $params['vastaaja_id'];
@@ -40,7 +25,7 @@ class VastausController extends BaseController{
       'vastaaja_id' => $vastaaja_id
       );
 
-      if($params['vastausteksti']){
+      if (array_key_exists('vastausteksti', $params)){
         $attributes['vastausteksti'] = $params['vastausteksti'];
       } else {
         $attributes['likert_vastaus'] = $params['likert_vastaus'];
@@ -53,11 +38,15 @@ class VastausController extends BaseController{
       if(count($errors) == 0){
         $vastaus->save();
         $errors = 0;
+        $vastattujenKysymystenIdt = Vastaus::allAnsweredQuestionsIds($vastaaja_id);
+        $vastaamattomatKysymykset = Kysymys::findUnanswered($kurssi_id, $vastattujenKysymystenIdt);
 
         self::askRemainingQuestions($vastaaja_id, $kurssi_id, $kurssi_nimi, $vastaamattomatKysymykset, $errors);
       } else {
+        $vastaamattomatKysymykset = Kysymys::all($kurssi_id);
         self::askRemainingQuestions($vastaaja_id, $kurssi_id, $kurssi_nimi, $vastaamattomatKysymykset, $errors);
-      }
+      } 
+
   }
 
   public static function showForStudent($kurssi_id){
@@ -72,7 +61,12 @@ class VastausController extends BaseController{
   }
 
   public static function askRemainingQuestions($vastaaja_id, $kurssi_id, $kurssi_nimi, $kysymykset, $errors){ 
-      View::make('esittely/kurssikysely.html', array('vastaaja_id' => $vastaaja_id, 'kurssi_id' =>$kurssi_id, 'kurssi_nimi' => $kurssi_nimi, 'kysymykset' => $kysymykset, 'errors' => $errors));
+
+    if($kysymykset){
+      View::make('esittely/kurssikysely.html', array('vastaaja_id' => $vastaaja_id, 'kurssi_id' =>$kurssi_id, 'kurssi_nimi' => $kurssi_nimi, 'kysymykset' => $kysymykset, 'errors' => $errors)); 
+    } else {
+      View::make('esittely/kurssikyselyLoppu.html');
+    }
   }
 
 }

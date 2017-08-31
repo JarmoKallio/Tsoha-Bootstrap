@@ -27,20 +27,21 @@
       {% if kysymys.vastaustyyppi|lower starts with 't' %}
       <input type="text" name="vastausteksti" class="form-control" value="Kirjoita vastaus max 500 merkkiä">
       {% else %}
-      <input type="radio" name="likert_vastaus" value="male"> Vahvasti samaa mieltä
-  		<input type="radio" name="likert_vastaus" value="female"> Samaa mieltä
-  		<input type="radio" name="likert_vastaus" value="female"> en osaa sanoa
-  		<input type="radio" name="likert_vastaus" value="female"> Eri mieltä
-  		<input type="radio" name="likert_vastaus" value="other"> Vahvasti eri mieltä
+      <input type="radio" name="likert_vastaus" value="5"> Vahvasti samaa mieltä
+  		<input type="radio" name="likert_vastaus" value="4"> Samaa mieltä
+  		<input type="radio" name="likert_vastaus" value="3" CHECKED/> en osaa sanoa
+  		<input type="radio" name="likert_vastaus" value="2"> Eri mieltä
+  		<input type="radio" name="likert_vastaus" value="1"> Vahvasti eri mieltä
   		
-  		<!--piilotetut kentät-->
-
-			<input type="hidden" name="kurssi_id" value="{{kurssi_id}}">
+  		
+  		<br>
+      {% endif %}
+      <!--piilotetut kentät-->
+      <input type="hidden" name="kurssi_id" value="{{kurssi_id}}">
 			<input type="hidden" name="kurssi_nimi" value="{{kurssi_nimi}}">
 			<input type="hidden" name="kysymys_id" value="{{kysymys.kysymys_id}}">
 			<input type="hidden" name="vastaaja_id" value="{{vastaaja_id}}">
-  		<br>
-      {% endif %}
+      
       <br>
       <button type="submit" class="btn btn-primary">Tallenna</button>
 			<br>
