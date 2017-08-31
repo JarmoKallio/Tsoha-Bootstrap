@@ -2,21 +2,26 @@
 
 class Vastaus extends BaseModel{
 
-	public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus;
+	public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus, $isLikert_vastaus;
 
 	public function __construct($attributes){
     parent::__construct($attributes);
 
-    $this->validators = array('validate_vastausteksti', 'validate_likertvastaus');
-  	}
+    if(isLikert_vastaus){
+    	$this->validators = array('validate_likertvastaus');
+    } else{
+    	$this->validators = array('validate_vastausteksti');
+    }
 
-  public static getNewAnswererId(){
+  }
+
+  public static function getNewAnswererId(){
   	$query = DB::connection()->prepare('SELECT MAX(vastaaja_id) FROM Vastaus');
 		$query->execute();
 		$row=$query->fetch();
 
 		if($row){
-			$vastaaja_id = 1 + $row['vastaaja_id'];
+			$vastaaja_id = 1 + $row[0];
 		} else {
 			$vastaaja_id = 1;
 		}
@@ -47,7 +52,23 @@ class Vastaus extends BaseModel{
 
 	}
 
-	public function save($kysymys_id){
+	public static function allAnsweredQuestionsIds($vastaaja_id){
+		$query = DB::connection()->prepare('SELECT * FROM Vastaus Where vastaaja_id = :vastaaja_id');
+
+		$query->execute(array('vastaaja_id'=>$vastaaja_id));
+		$rows=$query->fetchAll();
+		
+		$ids = array();
+
+		foreach($rows as $row){
+			$ids['kysymys_id'] = $row['kysymys_id'];
+		}
+
+		return $ids;
+
+	}
+
+	public function save(){
     $query = DB::connection()->prepare('INSERT INTO Vastaus (kysymys_id, vastaaja_id, vastausteksti, likert_vastaus) VALUES (:kysymys_id, :vastaaja_id, :vastausteksti, :likert_vastaus) RETURNING vastaus_id');
 
     $query->execute(array('kysymys_id' => $this->kysymys_id, 'vastaaja_id' => $this->vastaaja_id, 'vastausteksti' => $this->vastausteksti, 'likert_vastaus' => $this->likert_vastaus));

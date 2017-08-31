@@ -2,7 +2,7 @@
 {% block content %}
   <h1>Kurssikysely</h1>
   <p>
-    Tällä sivulla voit vastata kurssin {{kurssi.nimi}} -kurssikyselyyn.
+    Tällä sivulla voit vastata kurssin {{kurssi_nimi}} -kurssikyselyyn.
   </p>
   <br>
   <br>
@@ -17,11 +17,11 @@
     </div>
   {% endif %}
 
+{% for kysymys in kysymykset %}
 
-{% for kysymys in kysymykset%}
-			<form method="post" action="{{base_path}}/lisays/lisaa_vastaus/{{kysymys.kysymys_id}}/{{vastaaja_id}}">
+			<form method="post" action="{{base_path}}/lisays/lisaa_vastaus">
 			<div class="form-group">
-			<p>{{kysymys.nimi}}</p>
+			<p>{{kysymys.nimi}}: {{kysymys.kysymysteksti}}</p>
       <br>
 
       {% if kysymys.vastaustyyppi|lower starts with 't' %}
@@ -32,6 +32,13 @@
   		<input type="radio" name="likert_vastaus" value="female"> en osaa sanoa
   		<input type="radio" name="likert_vastaus" value="female"> Eri mieltä
   		<input type="radio" name="likert_vastaus" value="other"> Vahvasti eri mieltä
+  		
+  		<!--piilotetut kentät-->
+
+			<input type="hidden" name="kurssi_id" value="{{kurssi_id}}">
+			<input type="hidden" name="kurssi_nimi" value="{{kurssi_nimi}}">
+			<input type="hidden" name="kysymys_id" value="{{kysymys.kysymys_id}}">
+			<input type="hidden" name="vastaaja_id" value="{{vastaaja_id}}">
   		<br>
       {% endif %}
       <br>

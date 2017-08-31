@@ -25,7 +25,7 @@
   });
 
   $routes->get('/listaus/kysely/:id', function($id){
-  KurssiController::showForStudent($id);
+  VastausController::showForStudent($id);
   });
 
   $routes->post('/lisays', function(){
@@ -147,6 +147,6 @@
   });
 
   //Kyselyyn vastaaminen
-  $routes->post('/lisays/lisaa_vastaus/:kysymys_id/:vastaaja_id', function($kysymys_id, $vastaaja_id){
-  VastausController::saveAnswer($kysymys_id, $vastaaja_id);
+  $routes->post('/lisays/lisaa_vastaus', function(){
+  VastausController::saveStudentsAnswer();
   });

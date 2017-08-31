@@ -16,19 +16,23 @@ class Kysymys extends BaseModel{
 		$query->execute(array('kurssi_id'=>$kurssi_id));
 		$rows=$query->fetchAll();
 		
-		$kysymykset = array();
+		$kysymykset = self::returnMultiple($rows);
+		return $kysymykset;
+	}
 
-		foreach($rows as $row){
-			$kysymykset[] = new Kysymys(array(
-				'nimi' => $row['nimi'],
-				'kysymysteksti' => $row['kysymysteksti'],
-				'vastaustyyppi' => $row['vastaustyyppi'],
-				'kysymys_id' => $row['kysymys_id']
-				));
+	public static function findUnanswered($kurssi_id, $vastattujenKysymystenIdt){
+		$kysymykset = self::all($kurssi_id);
+
+		//sekä kysymysten määrä että vastattujen kysymysten määrä tulee relistisesti...
+		//...käytetyssä ohjelmassa aina olemaan varsin pieni
+		foreach($kysymykset as $kysymys){
+			$id = $kysymys->kysymys_id;
+			if(in_array($id, $vastattujenKysymystenIdt)){
+				unset($kysymykset[$id]);
+			}
 		}
 
 		return $kysymykset;
-
 	}
 
 	public static function findID($id){
@@ -65,5 +69,20 @@ class Kysymys extends BaseModel{
     $query = DB::connection()->prepare('DELETE FROM Kysymys WHERE kysymys_id = :kysymys_id');
     $query->execute(array('kysymys_id' => $this->kysymys_id));
   }
+
+  public static function returnMultiple($rows){
+		$kysymykset = array();
+
+		foreach($rows as $row){
+			$kysymykset[] = new Kysymys(array(
+				'nimi' => $row['nimi'],
+				'kysymysteksti' => $row['kysymysteksti'],
+				'vastaustyyppi' => $row['vastaustyyppi'],
+				'kysymys_id' => $row['kysymys_id']
+				));
+		}
+
+		return $kysymykset;
+	}
 
 }

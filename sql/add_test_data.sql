@@ -23,3 +23,4 @@ VALUES ('Johdatus syvään filosofointiin, kevät 2017','filosofisen filosofian 
 
 INSERT INTO Kurssi (nimi, laitos)
 VALUES ('Johdatus syvään filosofointiin -itseopiskelu, kevät 2018','filosofisen filosofian ja sosiaalifilosofian laitos');
+
