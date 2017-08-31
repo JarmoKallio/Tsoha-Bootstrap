@@ -37,7 +37,7 @@ CREATE TABLE Vastaus(
   vastaus_id SERIAL PRIMARY KEY,
   kysymys_id INTEGER REFERENCES Kysymys(kysymys_id),
   vastaaja_id INTEGER,
-  vastausteksti VARCHAR (500),
+  vastausteksti VARCHAR (2000),
   likert_vastaus INTEGER
 
 );

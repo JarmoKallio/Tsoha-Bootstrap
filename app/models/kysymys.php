@@ -23,16 +23,18 @@ class Kysymys extends BaseModel{
 	public static function findUnanswered($kurssi_id, $vastattujenKysymystenIdt){
 		$kysymykset = self::all($kurssi_id);
 
-		//sekä kysymysten määrä että vastattujen kysymysten määrä tulee relistisesti...
-		//...käytetyssä ohjelmassa aina olemaan varsin pieni
+		//sekä kysymysten määrä että vastattujen kysymysten määrä tulee relistisesti..
+		//..käytetyssä ohjelmassa aina olemaan varsin pieni, kukaan opiskelija ei vastaa sataan kysymykseen jne..
+		$kysymyksetJaljella= array();
+
 		foreach($kysymykset as $kysymys){
 			$id = $kysymys->kysymys_id;
-			if(in_array($id, $vastattujenKysymystenIdt)){
-				unset($kysymykset[$id]);
+			if(!in_array($id, $vastattujenKysymystenIdt)){
+				$kysymyksetJaljella[] = $kysymys;
 			}
 		}
 
-		return $kysymykset;
+		return $kysymyksetJaljella;
 	}
 
 	public static function findID($id){

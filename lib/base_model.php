@@ -123,8 +123,19 @@
       return $errors;
     }
 
-    public function validate_vastausteksti(){
+    public function validate_vastaus(){
       $errors = array();
+      if($this->likert_vastaus == null){
+        $errors =self::validateTeksti($errors);
+      }else{
+        $errors =self::validateLikert($errors);
+      }
+
+      return $errors;
+
+    }
+
+    private function validateTeksti($errors){
       if($this->vastausteksti == '' || $this->vastausteksti == null){
         $errors[] = 'Vastaus ei saa olla tyhjä!';
         }
@@ -133,13 +144,20 @@
         $errors[] = 'Vastauksen pituuden tulee olla vähintään kolme merkkiä!';
         }
 
-      if(!($this->string_length_does_not_exceed($this->vastausteksti, 500))){
+      if(!($this->string_length_does_not_exceed($this->vastausteksti, 2000))){
         $errors[] = 'Vastaus liian pitkä! Olemme iloisia, että teillä on paljon sanottavaa, pystyisittekö hieman tiivistämään?';
         }
 
       return $errors;
-
     }
+
+    private function validateLikert($errors){
+      if(!($this->likert_vastaus == '1' || $this->likert_vastaus == '2' || $this->likert_vastaus == '3' ||$this->likert_vastaus == '4' || $this->likert_vastaus == '5')){
+        $errors[] = 'Jokin meni vikaan, monivalinnan vastaus ei ole kelvollinen!';
+      }
+      return $errors;
+    }
+
 
 
   }

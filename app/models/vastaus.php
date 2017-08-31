@@ -2,16 +2,12 @@
 
 class Vastaus extends BaseModel{
 
-	public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus, $isLikert_vastaus;
+	public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus;
 
 	public function __construct($attributes){
     parent::__construct($attributes);
 
-    if($this->isLikert_vastaus){
-    	$this->validators = array('validate_likertvastaus');
-    } else{
-    	$this->validators = array('validate_vastausteksti');
-    }
+    $this->validators = array('validate_vastaus');
 
   }
 
@@ -61,7 +57,7 @@ class Vastaus extends BaseModel{
 		$ids = array();
 
 		foreach($rows as $row){
-			$ids['kysymys_id'] = $row['kysymys_id'];
+			$ids[] = $row['kysymys_id'];
 		}
 
 		return $ids;

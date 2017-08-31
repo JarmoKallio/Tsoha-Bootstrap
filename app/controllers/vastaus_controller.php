@@ -19,17 +19,18 @@ class VastausController extends BaseController{
     $kurssi_nimi = $params['kurssi_nimi']; 
     $kysymys_id = $params['kysymys_id']; 
     $vastaaja_id = $params['vastaaja_id'];
+    $vastaustyyppi = $params['vastaustyyppi'];
 
     $attributes = array(
       'kysymys_id' => $kysymys_id,
-      'vastaaja_id' => $vastaaja_id
+      'vastaaja_id' => $vastaaja_id,
       );
 
-      if (array_key_exists('vastausteksti', $params)){
+      if ($vastaustyyppi =="teksti"){
         $attributes['vastausteksti'] = $params['vastausteksti'];
       } else {
         $attributes['likert_vastaus'] = $params['likert_vastaus'];
-        $attributes['$isLikert_vastaus'] = 1;
+        //$attributes['likert_vastaus'] = 3;
       }
 
       $vastaus = new Vastaus($attributes);
