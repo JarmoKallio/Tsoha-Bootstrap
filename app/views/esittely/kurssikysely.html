@@ -2,9 +2,47 @@
 {% block content %}
   <h1>Kurssikysely</h1>
   <p>
-    Tällä sivulla voit vastata kurssin {{kurssi.nimi}} -kyselyyn.
+    Tällä sivulla voit vastata kurssin {{kurssi.nimi}} -kurssikyselyyn.
   </p>
+  <br>
+  <br>
 
+    {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+
+{% for kysymys in kysymykset%}
+			<form method="post" action="{{base_path}}/lisays/lisaa_vastaus/{{kysymys.kysymys_id}}/{{vastaaja_id}}">
+			<div class="form-group">
+			<p>{{kysymys.nimi}}</p>
+      <br>
+
+      {% if kysymys.vastaustyyppi|lower starts with 't' %}
+      <input type="text" name="vastausteksti" class="form-control" value="Kirjoita vastaus max 500 merkkiä">
+      {% else %}
+      <input type="radio" name="likert_vastaus" value="male"> Vahvasti samaa mieltä
+  		<input type="radio" name="likert_vastaus" value="female"> Samaa mieltä
+  		<input type="radio" name="likert_vastaus" value="female"> en osaa sanoa
+  		<input type="radio" name="likert_vastaus" value="female"> Eri mieltä
+  		<input type="radio" name="likert_vastaus" value="other"> Vahvasti eri mieltä
+  		<br>
+      {% endif %}
+      <br>
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+			<br>
+			</div>
+			</form>
+			<br>
+			<br>
+
+{% endfor %}
 
 
 {% endblock %}

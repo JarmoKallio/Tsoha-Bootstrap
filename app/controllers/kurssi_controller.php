@@ -30,9 +30,11 @@ class KurssiController extends BaseController{
 
 	public static function showForStudent($id){
 		//pitää lisää varmistus että löytyy, tähän ja kurssin haku metodiin
+		$vastaaja_id = Vastaus::getNewAnswererId();
 		$kurssi = Kurssi::findID($id);
-		
-		View::make('esittely/kurssikysely.html', array('kurssi' =>$kurssi));
+		$kysymykset = Kysymys::all($id);
+
+		View::make('esittely/kurssikysely.html', array('kurssi' =>$kurssi, 'kysymykset' => $kysymykset, 'vastaaja_id' => $vastaaja_id));
 	}
 
 	//OPETTAJAN TOIMINTOJA (vaaditaan opettajan käyttöoikeudet)

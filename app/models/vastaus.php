@@ -7,8 +7,23 @@ class Vastaus extends BaseModel{
 	public function __construct($attributes){
     parent::__construct($attributes);
 
-    $this->validators = array('validate_vastausteksti');
+    $this->validators = array('validate_vastausteksti', 'validate_likertvastaus');
   	}
+
+  public static getNewAnswererId(){
+  	$query = DB::connection()->prepare('SELECT MAX(vastaaja_id) FROM Vastaus');
+		$query->execute();
+		$row=$query->fetch();
+
+		if($row){
+			$vastaaja_id = 1 + $row['vastaaja_id'];
+		} else {
+			$vastaaja_id = 1;
+		}
+
+		return $vastaaja_id;
+
+  }
 
 	public static function all($Kysymys_id){
 		$query = DB::connection()->prepare('SELECT * FROM Vastaus Where kysymys_id = :kysymys_id');

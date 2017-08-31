@@ -145,3 +145,8 @@
   $routes->get('/kyselylomake/julkaisu/sulje/:id', function($id){
   KurssiController::setPollClosed($id);
   });
+
+  //Kyselyyn vastaaminen
+  $routes->post('/lisays/lisaa_vastaus/:kysymys_id/:vastaaja_id', function($kysymys_id, $vastaaja_id){
+  VastausController::saveAnswer($kysymys_id, $vastaaja_id);
+  });
