@@ -116,7 +116,7 @@
         $errors[] = 'Kysymystekstin pituuden tulee olla vähintään kolme merkkiä!';
         }
 
-      if(!($this->string_length_does_not_exceed($this->kysymysteksti, 100))){
+      if(!($this->string_length_does_not_exceed($this->kysymysteksti, 500))){
         $errors[] = 'Kysymysteksti liian pitkä!';
         }
 
@@ -144,7 +144,7 @@
         $errors[] = 'Vastauksen pituuden tulee olla vähintään kolme merkkiä!';
         }
 
-      if(!($this->string_length_does_not_exceed($this->vastausteksti, 2000))){
+      if(!($this->string_length_does_not_exceed($this->vastausteksti, 500))){
         $errors[] = 'Vastaus liian pitkä! Olemme iloisia, että teillä on paljon sanottavaa, pystyisittekö hieman tiivistämään?';
         }
 

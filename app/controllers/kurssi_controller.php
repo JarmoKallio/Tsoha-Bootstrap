@@ -92,7 +92,7 @@ class KurssiController extends BaseController{
 
   public static function update($id){
     self::check_logged_in();
-	self::verify_user_right_is(1);
+    self::verify_user_right_is(1);
 
     $params = $_POST;
 
@@ -107,12 +107,12 @@ class KurssiController extends BaseController{
 
     if(count($errors) > 0){
       View::make('muokkaus/muutos/muokkaa_kurssia.html', array('errors' => $errors, 'attributes' => $attributes));
-    }else{
+    } else {
 
       $kurssi->update();
 
       $path = '/muokkaus/valitse/kurssi';
-      Redirect::to('/lisays/esittely', array('message' => 'Kurssin tiedot on päivitetty!', 'path'=>$path));
+      View::make('/lisays/esittely.html', array('message' => 'Kurssin tiedot on päivitetty!', 'path'=>$path));
     }
   }
 

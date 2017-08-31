@@ -16,7 +16,7 @@ Valitse kurssi listasta
       <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
       {% for kurssi in kurssit%}
       <tr>
-        <td><a href="{{base_path}}/muokkaus/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
+        <td><a href="{{base_path}}/raportti/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
         <td>{{kurssi.laitos}}</td>
       </tr>
       {% endfor %}

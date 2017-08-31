@@ -37,7 +37,6 @@
   });
 
 
-
   $routes->get('/muokkaus/valitse/kurssi', function(){
   KurssiController::indexForEditing();
   });
@@ -149,4 +148,8 @@
   //Kyselyyn vastaaminen
   $routes->post('/lisays/lisaa_vastaus', function(){
   VastausController::saveStudentsAnswer();
+  });
+
+  $routes->get('/raportti/:id', function($id){
+  VastausController::makeReport($id);
   });

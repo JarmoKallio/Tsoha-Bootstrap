@@ -19,7 +19,7 @@
     <div class="form-group">
       <input type="text" name="nimi" class="form-control" value="{{kysymys.nimi}}">Kysymyksen otsikko
       <br>
-      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti
+      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti max 500 merkkiä
       <br>
 
       {% if kysymys.vastaustyyppi|lower starts with 't' %}
@@ -39,7 +39,7 @@
     <div class="form-group">
       <input type="text" name="nimi" class="form-control" value="{{kysymys.nimi}}">Kysymyksen otsikko
       <br>
-      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti
+      <input type="text" name="kysymysteksti" class="form-control" value="{{kysymys.kysymysteksti}}">Kysymysteksti max 500 merkkiä
       <br>
 
       {% if kysymys.vastaustyyppi|lower starts with 't' %}
