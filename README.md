@@ -16,3 +16,8 @@ Yleisiä linkkejä:
 [lomakkeiden muokkaus](http://jarmokal.users.cs.helsinki.fi/poll/lomakkeen_muokkaus)
 [etusivu](http://jarmokal.users.cs.helsinki.fi/poll/etusivu)
 [esittelysivu](http://jarmokal.users.cs.helsinki.fi/poll/esittely)
+
+## Käyttäjätunnukset ja salasanat
+
+suunnittelijan tunnus: "Gooby", salasana "pizzaisyummy"
+opettajan tunnus: "Dolan", salasana "pizzaisyummy"

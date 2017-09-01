@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <p>
-Vastataksesi kyselyyn, valitse kurssisi listasta:
+    Vastataksesi kyselyyn, valitse kurssisi listasta:
 </p>
 
-  <table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered">
     <thead>
-      <tr>
-        <th>Kurssi</th>
-        <th>Laitos</th>
-      </tr>
+        <tr>
+            <th>Kurssi</th>
+            <th>Laitos</th>
+        </tr>
     </thead>
 
     <tbody>
-      <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
-      {% for kurssi in kurssit%}
-      <tr>
-        <td><a href="{{base_path}}/listaus/kysely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
-        <td>{{kurssi.laitos}}</td>
-      </tr>
-      {% endfor %}
+        <!-- hakua vastanneet kurssit tähän, kursseista linkit vastaussivuille -->
+        {% for kurssi in kurssit%}
+        <tr>
+            <td><a href="{{base_path}}/listaus/kysely/{{kurssi.kurssi_id}}">{{kurssi.nimi}}</a></td>
+            <td>{{kurssi.laitos}}</td>
+        </tr>
+        {% endfor %}
     </tbody>
-  </table>
+</table>
 {% endblock %}

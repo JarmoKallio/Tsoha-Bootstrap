@@ -1,136 +1,136 @@
 <?php
 
-class KysymysController extends BaseController{
-	
-	public static function index($kurssi_id){
-		self::check_logged_in();
-    self::verify_user_right_is(1);
+class KysymysController extends BaseController {
 
-		$kysymykset = Kysymys::all($kurssi_id);
-		return $kysymykset;
-		//View::make('', array('kysymykset' => $kysymykset));
-	}
+    public static function listaaKysymykset($kurssi_id) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-	public static function createQuestion($kurssi_id){
-		self::check_logged_in();
-    self::verify_user_right_is(1);
-
-		$params = $_POST;
-
-    $nimi = $params['nimi'];
-    $kysymysteksti = $params['kysymysteksti'];
-    $vastaustyyppi = $params['vastaustyyppi'];
-
-    $attributes = array(
-      'kurssi_id' => $kurssi_id,
-      'nimi' => $nimi,
-      'kysymysteksti' => $kysymysteksti,
-      'vastaustyyppi' => $vastaustyyppi
-    );
-
-    $kysymys = new Kysymys($attributes);
-		$errors = $kysymys->errors();
-
-    if(count($errors) == 0){
-      $kysymys->save();
-      self::editPoll($kurssi_id, 0);
-    } else {
-      //laitetaan virheellinen kysymys listalle..
-    	self::editPollIterate($kurssi_id, $errors, $kysymys);
+        $kysymykset = Kysymys::kaikkiKurssiIdlla($kurssi_id);
+        return $kysymykset;
+        //View::make('', array('kysymykset' => $kysymykset));
     }
-	}
+    //luodaan uusi kysymys
+    public static function luoKysymys($kurssi_id) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-  public static function deleteQuestion($kurssi_id, $kysymys_id){
-    self::check_logged_in();
-    self::verify_user_right_is(1);
+        $parametrit = $_POST;
 
-    $kysymys = new Kysymys(array('kysymys_id' => $kysymys_id));
-    $kysymys->delete();
+        $nimi = $parametrit['nimi'];
+        $kysymysteksti = $parametrit['kysymysteksti'];
+        $vastaustyyppi = $parametrit['vastaustyyppi'];
 
-    self::editPoll($kurssi_id, 0);
-  }
+        $attribuutit = array(
+            'kurssi_id' => $kurssi_id,
+            'nimi' => $nimi,
+            'kysymysteksti' => $kysymysteksti,
+            'vastaustyyppi' => $vastaustyyppi
+        );
 
+        $kysymys = new Kysymys($attribuutit);
+        $virheet = $kysymys->errors();
 
-  //lomakehallinta
-  public static function editPoll($kurssi_id, $errors){
-  	self::check_logged_in();
-    self::verify_user_right_is(1);
+        if (count($virheet) == 0) {
+            $kysymys->tallennaKysymys();
+            self::jatkaTaiAloitaMuokkaus($kurssi_id, 0);
+        } else {
+            //laitetaan virheellinen kysymys takaisin lomakkeelle
+            self::virheTallennettaessaKysymysta($kurssi_id, $virheet, $kysymys);
+        }
+    }
 
-    $kysymykset = self::index($kurssi_id);
+    //Tallennus onnistui, jatketaan takaisin lomakkeelle, mukaan muut kurssin kysymykset
+    public static function jatkaTaiAloitaMuokkaus($kurssi_id) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-    View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $errors));
-  }
+        $kysymykset = self::listaaKysymykset($kurssi_id);
 
-  public static function editPollIterate($kurssi_id, $errors, $virhKysymys){
-    self::check_logged_in();
-    self::verify_user_right_is(1);
+        View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id));
+    }
 
-    $kysymykset = self::index($kurssi_id);
+    //tapahtui virhe, jokin parametreista väärin
+    public static function virheTallennettaessaKysymysta($kurssi_id, $virheet, $virhKysymys) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-    $kysymysLoytyi=false;
-    if($virhKysymys){
-    //lisätään virheellinen kysymys listalle
-      if($kysymykset){
-        foreach ($kysymykset as $kysymys) {
-          if($kysymys->kysymys_id == $virhKysymys->kysymys_id){
-            $kysymys->nimi = $virhKysymys->nimi;
-            $kysymys->kysymysteksti = $virhKysymys->kysymysteksti;
-            $kysymysLoytyi= true;
-           break;
-          } 
-       }
-     } 
+        $kysymykset = self::listaaKysymykset($kurssi_id);
 
-      if(!$kysymysLoytyi){
-        //kysymyksiä ei ollut, joten lisätään suoraan virheellinen
-      $kysymykset[] = $virhKysymys;
-      }
+        View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $virheet, 'viallinenKysymys' => $virhKysymys));
     }
 
 
-    View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $errors));
-  }
 
-  public static function updateQuestion($kurssi_id){
-    self::check_logged_in();
-    self::verify_user_right_is(1);
 
-    $params = $_POST;
 
-    $nimi = $params['nimi'];
-    $kysymysteksti = $params['kysymysteksti'];
-    $vastaustyyppi = $params['vastaustyyppi'];
 
-    $attributes = array(
-      'kurssi_id' => $kurssi_id,
-      'kysymys_id' => $params['kysymys_id'],
-      'nimi' => $nimi,
-      'kysymysteksti' => $kysymysteksti,
-      'vastaustyyppi' => $vastaustyyppi
-    );
+    public static function poistaKysymys($kurssi_id, $kysymys_id) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-    $kysymys = new Kysymys($attributes);
-    $errors = $kysymys->errors();
+        $kysymys = new Kysymys(array('kysymys_id' => $kysymys_id));
+        $kysymys->poista();
 
-    if(count($errors) == 0){
-      $kysymys->update();
-      self::editPollIterate($kurssi_id, 0, 0);
-    } else {
-
-      //virheellinen kysymys mukaan
-      self::editPollIterate($kurssi_id, $errors, $kysymys);
+        self::jatkaTaiAloitaMuokkaus($kurssi_id, 0);
     }
 
-  }
 
-  //käytetään kun käyttäjä yrittää poistaa tallentamattoman kysymyksen, linkki ohjaa lopulta tänne
-  public static function triedToRemoveEmpty($kurssi_id){
-    self::check_logged_in();
-    self::verify_user_right_is(1);
-    
-    self::editPoll($kurssi_id, 0);
-    
+    //yritetään muokata olemassaolevaa kysymystä
+    public static function paivitaKysymys($kurssi_id) {
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
 
-  }
+        $parametrit = $_POST;
+
+        $nimi = $parametrit['nimi'];
+        $kysymysteksti = $parametrit['kysymysteksti'];
+        $vastaustyyppi = $parametrit['vastaustyyppi'];
+        $kysymysId = $parametrit['kysymys_id'];
+
+        $attribuutit = array(
+            'kurssi_id' => $kurssi_id,
+            'kysymys_id' => $parametrit['kysymys_id'],
+            'nimi' => $nimi,
+            'kysymysteksti' => $kysymysteksti,
+            'vastaustyyppi' => $vastaustyyppi
+        );
+
+        $kysymys = new Kysymys($attribuutit);
+        $virheet = $kysymys->errors();
+
+        if (count($virheet) == 0 ) {
+            $kysymys->paivitaKysymys();
+            //palataan alkunäkymään
+            self::jatkaTaiAloitaMuokkaus($kurssi_id);
+        } else {
+            //nyt vanha kysymys on olemassa mutta sitä vain halutaan muokata. voidaan korvata kysymyslistassa...
+            //virheellinen kysymys mukaan
+            self::virheMuokatessaOlemassaolevaaKysymysta($kurssi_id, $virheet, $kysymys);
+        }
+    }
+
+
+    public static function virheMuokatessaOlemassaolevaaKysymysta($kurssi_id, $virheet, $virhKysymys){
+        self::tarkista_etta_kirjautunut();
+        self::varmista_etta_kayttajan_oikeus(1);
+        //self::verify_user_right_is(1);
+        //haetaan kaikki kysymykset ja korvataan uudella viallisella
+        $kysymykset = Kysymys::kaikkiKurssiIdlla($kurssi_id);
+
+        
+            foreach ($kysymykset as $kysymys) {
+                if($kysymys->kysymys_id == $virhKysymys->kysymys_id){
+                    $kysymys->nimi = $virhKysymys->nimi;
+                    $kysymys->kysymysteksti = $virhKysymys->kysymysteksti;
+                    $kysymys->vastaustyyppi = $virhKysymys->vastaustyyppi;
+                    break;
+                } 
+    }
+
+
+    View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $virheet));
+
+    }
 
 }

@@ -1,37 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Muokkaa käyttäjän tietoja</h1>
+<h1>Muokkaa käyttäjän tietoja</h1>
 
-  <!--virheiden käsittely..-->
-  {% if errors %}
-    <div class="alert alert-danger">
-      <ul>
+<!--virheiden käsittely..-->
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
         {% for error in errors %}
-          <li>{{error}}</li>
+        <li>{{error}}</li>
         {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+    </ul>
+</div>
+{% endif %}
 
 
-  <form method="post" action="{{base_path}}/muokkaus/muutos/kayttaja/{{attributes.kayttaja_id}}">
+<form method="post" action="{{base_path}}/muokkaus/muutos/kayttaja/{{attributes.kayttaja_id}}">
     <div class="form-group">
-      <label class="control-label">nimi</label>
-      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
-    </div>
-
-    <div class="form-group">
-      <label class="control-label">salasana</label>
-      <input type="text" name="salasana" class="form-control" value="{{attributes.salasana}}">
+        <label class="control-label">nimi</label>
+        <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
     </div>
 
     <div class="form-group">
-      <label class="control-label">käyttöoikeus</label>
-      <input type="number" name="kayttooikeus" class="form-control" value="{{attributes.kayttooikeus}}">
+        <label class="control-label">salasana</label>
+        <input type="text" name="salasana" class="form-control" value="{{attributes.salasana}}">
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
+        <label class="control-label">käyttöoikeus</label>
+        <input type="number" name="kayttooikeus" class="form-control" value="{{attributes.kayttooikeus}}">
     </div>
-  </form>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
+    </div>
+</form>
 {% endblock %}

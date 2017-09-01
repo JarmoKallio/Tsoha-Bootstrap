@@ -1,47 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>
+<p>
     Lisää listasta opettajia kurssin pitäjiksi:
-  </p>
+</p>
 
-  
-    
-    <table class="table table-striped table-bordered">
-      <thead>
+
+
+<table class="table table-striped table-bordered">
+    <thead>
         <tr>
-          <th>Valitse</th>
-          <th>Nimi</th>
+            <th>Valitse</th>
+            <th>Nimi</th>
         </tr>
-      </thead>
-      
-      <tbody>
-        
+    </thead>
+
+    <tbody>
+
         {% for käyttäjä in käyttäjät %}
 
         <tr>
-        <td>
-          <div class="form-group">
-          <form method="post" action="{{base_path}}/listaus/lisaa_tai_poista_kurssilta/{{kurssi_id}}">
-            <input type="hidden" name="kayttaja_id" value="{{käyttäjä.kayttaja_id}}">
-            <input type="hidden" name="selected" value="{{käyttäjä.selected}}">
-            <input type="submit" value="{{käyttäjä.selected}}">
-          </form>
-          </div>
-          </td>
-        
-          <td>
-          <div class="form-group">
-            <a>{{käyttäjä.nimi}}</a>
-          </div>
-          </td>
-        
-          </tr>
-        
-          {% endfor %}
-      </tbody>
-    </table>
+            <td>
+                <div class="form-group">
+                    <form method="post" action="{{base_path}}/listaus/lisaa_tai_poista_kurssilta/{{kurssi_id}}">
+                        <input type="hidden" name="kayttaja_id" value="{{käyttäjä.kayttaja_id}}">
+                        <input type="hidden" name="selected" value="{{käyttäjä.selected}}">
+                        <input type="submit" value="{{käyttäjä.selected}}">
+                    </form>
+                </div>
+            </td>
 
-    <a href="{{base_path}}/muokkaus/{{kurssi_id}}" class="btn btn-success">Valmis</a>
+            <td>
+                <div class="form-group">
+                    <a>{{käyttäjä.nimi}}</a>
+                </div>
+            </td>
+
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{base_path}}/muokkaus/{{kurssi_id}}" class="btn btn-success">Valmis</a>
 
 
 {% endblock %}

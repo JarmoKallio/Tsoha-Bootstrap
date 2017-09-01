@@ -1,92 +1,89 @@
 <?php
 
-class Vastaus extends BaseModel{
+class Vastaus extends BaseModel {
 
-	public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus;
+    public $vastaus_id, $kysymys_id, $vastaaja_id, $vastausteksti, $likert_vastaus;
 
-	public function __construct($attributes){
-    parent::__construct($attributes);
+    public function __construct($attribuutit) {
+        parent::__construct($attribuutit);
 
-    $this->validators = array('validate_vastaus');
+        $this->validators = array('validate_vastaus');
+    }
+    
+    //luodaan id jotta saadaan kaikki saman vastaajan samassa kyselyssä vastaamat selville
+    public static function uusiVastaajaId() {
+        $kysely = DB::connection()->prepare('SELECT MAX(vastaaja_id) FROM Vastaus');
+        $kysely->execute();
+        $rivi = $kysely->fetch();
 
-  }
+        if ($rivi) {
+            $vastaaja_id = 1 + $rivi[0];
+        } else {
+            $vastaaja_id = 1;
+        }
 
-  public static function getNewAnswererId(){
-  	$query = DB::connection()->prepare('SELECT MAX(vastaaja_id) FROM Vastaus');
-		$query->execute();
-		$row=$query->fetch();
+        return $vastaaja_id;
+    }
 
-		if($row){
-			$vastaaja_id = 1 + $row[0];
-		} else {
-			$vastaaja_id = 1;
-		}
+    public static function kaikkiIdlla($kysymys_id) {
+        $kysely = DB::connection()->prepare('SELECT * FROM Vastaus Where kysymys_id = :kysymys_id');
 
-		return $vastaaja_id;
+        $kysely->execute(array('kysymys_id' => $kysymys_id));
+        $rivit = $kysely->fetchAll();
 
-  }
+        $vastaukset = array();
 
-	public static function all($kysymys_id){
-		$query = DB::connection()->prepare('SELECT * FROM Vastaus Where kysymys_id = :kysymys_id');
+        foreach ($rivit as $rivi) {
+            $vastaukset[] = new Vastaus(array(
+                'vastaus_id' => $rivi['vastaus_id'],
+                'kysymys_id' => $rivi['kysymys_id'],
+                'vastaaja_id' => $rivi['vastaaja_id'],
+                'vastausteksti' => $rivi['vastausteksti'],
+                'likert_vastaus' => $rivi['likert_vastaus']
+            ));
+        }
 
-		$query->execute(array('kysymys_id'=>$kysymys_id));
-		$rows=$query->fetchAll();
-		
-		$vastaukset = array();
+        return $vastaukset;
+    }
 
-		foreach($rows as $row){
-			$vastaukset[] = new Vastaus(array(
-				'vastaus_id' => $row['vastaus_id'],
-				'kysymys_id' => $row['kysymys_id'],
-				'vastaaja_id' => $row['vastaaja_id'],
-				'vastausteksti' => $row['vastausteksti'],
-				'likert_vastaus' => $row['likert_vastaus']
-				));
-		}
+    public static function kaikkienVastattujenKysymystenIdt($vastaaja_id) {
+        $kysely = DB::connection()->prepare('SELECT * FROM Vastaus Where vastaaja_id = :vastaaja_id');
 
-		return $vastaukset;
+        $kysely->execute(array('vastaaja_id' => $vastaaja_id));
+        $rivit = $kysely->fetchAll();
 
-	}
+        $idt = array();
 
-	public static function allAnsweredQuestionsIds($vastaaja_id){
-		$query = DB::connection()->prepare('SELECT * FROM Vastaus Where vastaaja_id = :vastaaja_id');
+        foreach ($rivit as $rivi) {
+            $idt[] = $rivi['kysymys_id'];
+        }
 
-		$query->execute(array('vastaaja_id'=>$vastaaja_id));
-		$rows=$query->fetchAll();
-		
-		$ids = array();
+        return $idt;
+    }
 
-		foreach($rows as $row){
-			$ids[] = $row['kysymys_id'];
-		}
+    public function tallennaVastaus() {
+        $kysely = DB::connection()->prepare('INSERT INTO Vastaus (kysymys_id, vastaaja_id, vastausteksti, likert_vastaus) VALUES (:kysymys_id, :vastaaja_id, :vastausteksti, :likert_vastaus) RETURNING vastaus_id');
 
-		return $ids;
+        $kysely->execute(array('kysymys_id' => $this->kysymys_id, 'vastaaja_id' => $this->vastaaja_id, 'vastausteksti' => $this->vastausteksti, 'likert_vastaus' => $this->likert_vastaus));
+        $rivi = $kysely->fetch();
+        $this->vastaus_id = $rivi['vastaus_id'];
+    }
 
-	}
+    public function poistaVastaus() {
+        //poistetaan aluksi tähän kysymykseen liittyvät vastaukset
+        $kysely = DB::connection()->prepare('DELETE FROM Vastaus WHERE vastaus_id = :vastaus_id');
+        $kysely->execute(array('vastaus_id' => $this->vastaus_id));
+    }
 
-	public function save(){
-    $query = DB::connection()->prepare('INSERT INTO Vastaus (kysymys_id, vastaaja_id, vastausteksti, likert_vastaus) VALUES (:kysymys_id, :vastaaja_id, :vastausteksti, :likert_vastaus) RETURNING vastaus_id');
+    public static function haeVastaajienMaara($kurssi_id) {
+        $kysely = DB::connection()->prepare('SELECT COUNT(DISTINCT vastaaja_id) FROM Vastaus, kysymys, kurssi WHERE kurssi.kurssi_id = :kurssi_id and kysymys.kurssi_id =kurssi.kurssi_id and vastaus.kysymys_id = kysymys.kysymys_id');
 
-    $query->execute(array('kysymys_id' => $this->kysymys_id, 'vastaaja_id' => $this->vastaaja_id, 'vastausteksti' => $this->vastausteksti, 'likert_vastaus' => $this->likert_vastaus));
-    $row = $query->fetch();
-    $this->vastaus_id = $row['vastaus_id'];
-  }
+        $kysely->execute(array('kurssi_id' => $kurssi_id));
+        $rivi = $kysely->fetch();
 
-  public function delete(){
-  	//poistetaan aluksi tähän kysymykseen liittyvät vastaukset
-    $query = DB::connection()->prepare('DELETE FROM Vastaus WHERE vastaus_id = :vastaus_id');
-    $query->execute(array('vastaus_id' => $this->vastaus_id));
-  }
+        $vastaajienMaara = $rivi[0];
 
-  public static function getNumOfAnswerers($kurssi_id){
-  	$query = DB::connection()->prepare('SELECT COUNT(DISTINCT vastaaja_id) FROM Vastaus, kysymys, kurssi WHERE kurssi.kurssi_id = :kurssi_id and kysymys.kurssi_id =kurssi.kurssi_id and vastaus.kysymys_id = kysymys.kysymys_id');
-
-		$query->execute(array('kurssi_id'=>$kurssi_id));
-		$row = $query->fetch();
-
-		$numOfAnswerers = $row[0];
-
-		return $numOfAnswerers;
-  }
+        return $vastaajienMaara;
+    }
 
 }

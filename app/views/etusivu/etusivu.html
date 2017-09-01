@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Kurssikysely</h1>
-  <br>
-  <div class="alert alert-success">
-  {{message}}
-	</div>
+<h1>Kurssikysely</h1>
+<br>
+<div class="alert alert-success">
+    {{message}}
+</div>
 
-  <p>
+<p>
     {% if user_logged_in %}
     {% if user_rights == 1 %}
 
@@ -23,7 +23,7 @@
     {% else %}
     <a href="{{base_path}}/listaus" class="btn btn-success">Vastaa kyselyyn</a>
     {% endif %}
-  </p>
+</p>
 
 
 

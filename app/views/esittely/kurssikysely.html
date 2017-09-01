@@ -1,62 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Kurssikysely</h1>
-  <p>
+<h1>Kurssikysely</h1>
+<p>
     Tällä sivulla voit vastata kurssin {{kurssi_nimi}} -kurssikyselyyn.
-  </p>
-  <br>
-  <br>
+</p>
+<br>
+<br>
 
-    {% if errors %}
-    <div class="alert alert-danger">
-      <ul>
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
         {% for error in errors %}
-          <li>{{error}}</li>
+        <li>{{error}}</li>
         {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+    </ul>
+</div>
+{% endif %}
 
 {% for kysymys in kysymykset %}
 
-			<form method="post" action="{{base_path}}/lisays/lisaa_vastaus">
-			<div class="form-group">
-			<p>{{kysymys.nimi}}: {{kysymys.kysymysteksti}}</p>
-      <br>
+<form method="post" action="{{base_path}}/lisays/lisaa_vastaus">
+    <div class="form-group">
+        <p>{{kysymys.nimi}}: {{kysymys.kysymysteksti}}</p>
+        <br>
 
-      {% if kysymys.vastaustyyppi|lower starts with 't' %}
+        {% if kysymys.vastaustyyppi|lower starts with 't' %}
         {% if kysymys.kysymys_id == virhVastattuKysymysId %}
         <input type="text" name="vastausteksti" class="form-control" value="{{virhVastausteksti}}">
         {% else %}
         <input type="text" name="vastausteksti" class="form-control" value="max pituus 500 merkkiä">
         {% endif %}
 
-      {% else %}
+        {% else %}
 
-      <input type="radio" name="likert_vastaus" value="5"> Vahvasti samaa mieltä
-  		<input type="radio" name="likert_vastaus" value="4"> Samaa mieltä
-  		<input type="radio" name="likert_vastaus" value="3" CHECKED/> en osaa sanoa
-  		<input type="radio" name="likert_vastaus" value="2"> Eri mieltä
-  		<input type="radio" name="likert_vastaus" value="1"> Vahvasti eri mieltä
-  		
-  		<br>
-      {% endif %}
-      <!--piilotetut kentät-->
-      <input type="hidden" name="kurssi_id" value="{{kurssi_id}}">
-			<input type="hidden" name="kurssi_nimi" value="{{kurssi_nimi}}">
-			<input type="hidden" name="kysymys_id" value="{{kysymys.kysymys_id}}">
-			<input type="hidden" name="vastaaja_id" value="{{vastaaja_id}}">
-      <input type="hidden" name="vastaustyyppi" value="{{kysymys.vastaustyyppi}}">
+        <input type="radio" name="likert_vastaus" value="5"> Vahvasti samaa mieltä
+        <input type="radio" name="likert_vastaus" value="4"> Samaa mieltä
+        <input type="radio" name="likert_vastaus" value="3" CHECKED/> en osaa sanoa
+        <input type="radio" name="likert_vastaus" value="2"> Eri mieltä
+        <input type="radio" name="likert_vastaus" value="1"> Vahvasti eri mieltä
 
-      <br>
-      <button type="submit" class="btn btn-primary">Tallenna</button>
-			<br>
-			</div>
-			</form>
-			<br>
-			<br>
+        <br>
+        {% endif %}
+        <!--piilotetut kentät-->
+        <input type="hidden" name="kurssi_id" value="{{kurssi_id}}">
+        <input type="hidden" name="kurssi_nimi" value="{{kurssi_nimi}}">
+        <input type="hidden" name="kysymys_id" value="{{kysymys.kysymys_id}}">
+        <input type="hidden" name="vastaaja_id" value="{{vastaaja_id}}">
+        <input type="hidden" name="vastaustyyppi" value="{{kysymys.vastaustyyppi}}">
+
+        <br>
+        <button type="submit" class="btn btn-primary">Tallenna</button>
+        <br>
+    </div>
+</form>
+<br>
+<br>
 
 {% endfor %}
 
 
 {% endblock %}
+
+

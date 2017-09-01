@@ -7,13 +7,13 @@
       if(isset($_SESSION['user'])){
         $user_id = $_SESSION['user'];
         // Pyydetään User-mallilta käyttäjä session mukaisella id:llä
-        $user = Käyttäjä::find($user_id);
+        $user = Kayttaja::haeKayttaja($user_id);
 
         return $user;
       }
     }
 
-    public static function check_logged_in(){
+    public static function tarkista_etta_kirjautunut(){
       // Toteuta kirjautumisen tarkistus tähän.
       // Jos käyttäjä ei ole kirjautunut sisään, ohjaa hänet toiselle sivulle (esim. kirjautumissivulle).
         if(!isset($_SESSION['user'])){
@@ -22,7 +22,7 @@
 
     }
 
-    public static function verify_user_right_is($right){
+    public static function varmista_etta_kayttajan_oikeus($right){
       // Toteuta kirjautumisen tarkistus tähän.
       // Jos käyttäjä ei ole kirjautunut sisään, ohjaa hänet toiselle sivulle (esim. kirjautumissivulle).
       if(isset($_SESSION['user'])){
@@ -38,7 +38,7 @@
       if(isset($_SESSION['user'])){
         $user_id = $_SESSION['user'];
         // Pyydetään User-mallilta käyttäjä session mukaisella id:llä
-        $user = Käyttäjä::find($user_id);
+        $user = Kayttaja::haeKayttaja($user_id);
         $rights = $user->kayttooikeus;
 
         return $rights;

@@ -9,156 +9,156 @@
   });
 
   $routes->get('/listaus', function() {
-  KurssiController::indexForStudent();
+  KurssiController::listaaOpiskelijalle();
   });
 
   $routes->get('/esittely/:id', function($id) {
-  KurssiController::answerquestions($id);
+  KurssiController::vastaaKysymyksiin($id);
   });
 
   $routes->get('/lisays/uusi/kurssi', function(){
-  KurssiController::create();
+  KurssiController::lisaaKurssi();
   });
 
   $routes->get('/lisays/uusi/kayttaja', function(){
-  KäyttäjäController::create();
+  KayttajaController::lisaaKayttaja();
   });
 
   $routes->get('/listaus/kysely/:id', function($id){
-  VastausController::showForStudent($id);
+  VastausController::naytaOpiskelijalle($id);
   });
 
   $routes->post('/lisays', function(){
-  KurssiController::store();
+  KurssiController::tallennaKurssi();
   });
 
   $routes->post('/lisays/kurssi', function(){
-  KäyttäjäController::store();
+  KayttajaController::tallenna();
   });
 
 
   $routes->get('/muokkaus/valitse/kurssi', function(){
-  KurssiController::indexForEditing();
+  KurssiController::listaaMuokkaukseen();
   });
 
   $routes->get('/muokkaus/valitse/kayttaja', function(){
-  KäyttäjäController::indexForEditing();
+  KayttajaController::valitseKaikkiTietokannasta();
   });
 
   
 
   $routes->get('/muokkaus/muutos/kurssi/:id', function($id){
   // Kurssin muokkaaminen
-  KurssiController::change_kurssi_parameters($id);
+  KurssiController::muutaParametreja($id);
   });
 
     $routes->get('/muokkaus/muutos/kayttaja/:id', function($id){
   // Kurssin muokkaaminen
-  KäyttäjäController::change_käyttäjä_parameters($id);
+  KayttajaController::muutaKayttajanParametreja($id);
   });
 
 
   $routes->get('/muokkaus/poisto/kurssi/:id', function($id){
   // Kurssin poisto
-  KurssiController::confirmDelete($id);
+  KurssiController::varmistaPoisto($id);
   });
 
   $routes->get('/muokkaus/poisto/kurssi/varmistus/:id', function($id){
   // Kurssin poisto
-  KurssiController::delete($id);
+  KurssiController::poistaKurssi($id);
   });
 
 
   $routes->get('/muokkaus/poisto/kayttaja/:id', function($id){
-  KäyttäjäController::confirmDelete($id);
+  KayttajaController::varmistaPoisto($id);
   });
 
   $routes->get('/muokkaus/poisto/kayttaja/varmistus/:id', function($id){
-  KäyttäjäController::delete($id);
+  KayttajaController::poista($id);
   });
 
 
   $routes->post('/muokkaus/muutos/testi/:id', function($id){
-  KurssiController::update($id);
+  KurssiController::paivitaKurssi($id);
   });
 
   $routes->post('/muokkaus/muutos/kayttaja/:id', function($id){
-  KäyttäjäController::update($id);
+  KayttajaController::paivita($id);
   });
 
   $routes->get('/muokkaus/kayttaja/:id', function($id){
-  KäyttäjäController::edit($id);
+  KayttajaController::muokkaa($id);
   });
 
   $routes->get('/muokkaus/:id', function($id){
-  KurssiController::edit($id);
+  KurssiController::muokkaaKurssia($id);
   });
 
 
   //kirjautuminen
   $routes->get('/kirjautuminen', function(){
-  KäyttäjäController::signIn();
+  KayttajaController::kirjauduSisaan();
   });
 
   $routes->post('/kirjautuminen', function(){
-  KäyttäjäController::handle_signIn();
+  KayttajaController::kasitteleKirjautuminen();
   });
 
   $routes->post('/uloskirjautuminen', function(){
-  KäyttäjäController::logout();
+  KayttajaController::kirjauduUlos();
   });
 
   //opettajien valinta listasta kurssin pitäjiksi
 
   $routes->get('/valitse/opettajat/:id', function($id){
-  KäyttäjäController::selectTeachersForCourse($id);
+  KayttajaController::valitseOpettajiaKurssille($id);
   });
 
   $routes->post('/listaus/lisaa_tai_poista_kurssilta/:id', function($id){
-  KäyttäjäController::addTeacherForCourse($id);
+  KayttajaController::lisaaOpettajaKurssiin($id);
   });
 
   $routes->get('/omatKurssini', function(){
-  KurssiController::selectOwnCourse();
+  KurssiController::valitseOmatKurssit();
   });
 
   //kyselylomakkeen muokkaus
-  $routes->get('/muokkaus/kyselylomake/:id/:errors', function($id, $errors){
-  KysymysController::editPoll($id, $errors);
+  $routes->get('/muokkaus/kyselylomake/muutos/:id', function($id){
+  KysymysController::jatkaTaiAloitaMuokkaus($id);
   });
 
-  $routes->post('/muokkaus/kyselylomake/muutos/:id', function($id){
-  KysymysController::createQuestion($id);
+  $routes->post('/muokkaus/kyselylomake/lisaaUusi/:id', function($id){
+  KysymysController::luoKysymys($id);
   });
 
-  $routes->post('/muokkaus/kyselylomake/muutos/paivita/:id', function($id){
-  KysymysController::updateQuestion($id);
+  $routes->post('/muokkaus/kyselylomake/muokkaaVanhaa/:id', function($id){
+  KysymysController::paivitaKysymys($id);
   });
 
   $routes->get('/muokkaus/kyselylomake/poista_kysymys/:kurssi_id/:kysymys_id', function($kurssi_id, $kysymys_id){
-  KysymysController::deleteQuestion($kurssi_id, $kysymys_id);
+  KysymysController::poistaKysymys($kurssi_id, $kysymys_id);
   });
 
   //tulee tapauksessa jossa yritetään poistaa tallentamatonta kysymystä, joka viallinen, ohjataan 
   $routes->get('/muokkaus/kyselylomake/poista_kysymys/:kurssi_id/', function($kurssi_id){
-  KysymysController::triedToRemoveEmpty($kurssi_id);
+  KysymysController::yritettyPoistaaTallentamatonKysymys($kurssi_id);
   });
 
 
   //kyselylomakkeen julkaisu
   $routes->get('/kyselylomake/julkaisu/:id', function($id){
-  KurssiController::setPollOpened($id);
+  KurssiController::julkaiseKysely($id);
   });
 
   $routes->get('/kyselylomake/julkaisu/sulje/:id', function($id){
-  KurssiController::setPollClosed($id);
+  KurssiController::suljeKysely($id);
   });
 
   //Kyselyyn vastaaminen
   $routes->post('/lisays/lisaa_vastaus', function(){
-  VastausController::saveStudentsAnswer();
+  VastausController::tallennaVastaus();
   });
 
   $routes->get('/raportti/:id', function($id){
-  VastausController::makeReport($id);
+  VastausController::luoRaportti($id);
   });
