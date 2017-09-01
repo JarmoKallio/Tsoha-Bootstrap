@@ -131,8 +131,17 @@
   KysymysController::createQuestion($id);
   });
 
+  $routes->post('/muokkaus/kyselylomake/muutos/paivita/:id', function($id){
+  KysymysController::updateQuestion($id);
+  });
+
   $routes->get('/muokkaus/kyselylomake/poista_kysymys/:kurssi_id/:kysymys_id', function($kurssi_id, $kysymys_id){
   KysymysController::deleteQuestion($kurssi_id, $kysymys_id);
+  });
+
+  //tulee tapauksessa jossa yritetään poistaa tallentamatonta kysymystä, joka viallinen, ohjataan 
+  $routes->get('/muokkaus/kyselylomake/poista_kysymys/:kurssi_id/', function($kurssi_id){
+  KysymysController::triedToRemoveEmpty($kurssi_id);
   });
 
 

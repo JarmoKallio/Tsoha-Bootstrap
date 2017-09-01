@@ -32,7 +32,7 @@ class Vastaus extends BaseModel{
 		$query->execute(array('kysymys_id'=>$kysymys_id));
 		$rows=$query->fetchAll();
 		
-		$kysymykset = array();
+		$vastaukset = array();
 
 		foreach($rows as $row){
 			$vastaukset[] = new Vastaus(array(
@@ -76,6 +76,17 @@ class Vastaus extends BaseModel{
   	//poistetaan aluksi tähän kysymykseen liittyvät vastaukset
     $query = DB::connection()->prepare('DELETE FROM Vastaus WHERE vastaus_id = :vastaus_id');
     $query->execute(array('vastaus_id' => $this->vastaus_id));
+  }
+
+  public static function getNumOfAnswerers($kurssi_id){
+  	$query = DB::connection()->prepare('SELECT COUNT(DISTINCT vastaaja_id) FROM Vastaus, kysymys, kurssi WHERE kurssi.kurssi_id = :kurssi_id and kysymys.kurssi_id =kurssi.kurssi_id and vastaus.kysymys_id = kysymys.kysymys_id');
+
+		$query->execute(array('kurssi_id'=>$kurssi_id));
+		$row = $query->fetch();
+
+		$numOfAnswerers = $row[0];
+
+		return $numOfAnswerers;
   }
 
 }

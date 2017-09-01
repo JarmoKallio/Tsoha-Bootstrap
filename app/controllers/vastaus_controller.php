@@ -83,6 +83,7 @@ class VastausController extends BaseController{
   public static function makeReport($kurssi_id){
     self::check_logged_in();
 
+    $vastanneita = Vastaus::getNumOfAnswerers($kurssi_id);
     $kurssi = Kurssi::findID($kurssi_id);
     $kysymykset = Kysymys::all($kurssi_id);
 
@@ -98,18 +99,21 @@ class VastausController extends BaseController{
         $attributes = array(
           'kysymys' => $kysymys->kysymysteksti,
           'vastaukset' => $sanallisetVastaukset,
-          'vastaustenLukumaara' => count($sanallisetVastaukset)
+          'vastaustenLukumaara' => count($sanallisetVastaukset),
+          'isLikertVastaus' => 0
         );
       } else if($likertVastaukset){
         $attributes = array(
           'kysymys' => $kysymys->kysymysteksti,
           'keskiarvo' => self::getMean($likertVastaukset),
           'keskihajonta' => self::getStandardDeviation($likertVastaukset),
-          'vastaustenLukumaara' => count($likertVastaukset)
+          'vastaustenLukumaara' => count($likertVastaukset),
+          'isLikertVastaus' => 1
         );
       } else {
         $attributes = array(
-          'vastaustenLukumaara' => o
+          'kysymys' => $kysymys->kysymysteksti,
+          'vastaustenLukumaara' => 0
         );
       }
       
@@ -118,7 +122,7 @@ class VastausController extends BaseController{
 
     }
 
-    View::make('raportti/raportti.html', array('kysymys_vastaus_parit' => $kysymys_vastaus_parit, 'kurssi' => $kurssi));
+    View::make('raportti/raportti.html', array('kysymys_vastaus_parit' => $kysymys_vastaus_parit, 'kurssi' => $kurssi, 'vastanneita' => $vastanneita));
   }
 
   //tekstivastausten palautus

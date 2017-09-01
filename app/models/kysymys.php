@@ -87,4 +87,10 @@ class Kysymys extends BaseModel{
 		return $kysymykset;
 	}
 
+	public function update(){
+		$query = DB::connection()->prepare('UPDATE kysymys SET nimi = :nimi, kysymysteksti = :kysymysteksti, vastaustyyppi = :vastaustyyppi WHERE kysymys_id = :kysymys_id');
+    $query->execute(array('nimi' => $this->nimi, 'kysymysteksti' => $this->kysymysteksti, 'vastaustyyppi' => $this->vastaustyyppi, 'kysymys_id' => $this->kysymys_id));
+    $row = $query->fetch();
+	}
+
 }

@@ -1,25 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <h3>Kurssikyselyn tulokset</h3>
-  <p>raportti kurssista: {{kurssi.nimi}}</p>
+  <h2>Kurssikyselyn tulokset</h2>
+  <h3>kurssi: {{kurssi.nimi}}</h3>
   <br>
+  <br>
+  <h3>vastanneita: {{vastanneita}}</h3>
+  <br>
+  <h3>kysymykset ja niiden vastaukset:</h3>
   <br>
 
   {% for kvpari in kysymys_vastaus_parit %}
-
-			<h4>{{kvpari.kysymys}}</h4>
-      <p>vastauksia {{kvpari.vastaustenLukumaara}} kappaletta:</p>
-      <br>
-
-      {% for vastaus in kvpari.vastaukset %}
-        <p>vastaus: {{vastaus.vastausteksti}}</p>
-      {% endfor %}
-        <br>
-
+		<h4>kysymys: {{kvpari.kysymys}}</h4>
+        
+      {% if kvpari.isLikertVastaus %}
+        <p>vastauksia: {{kvpari.vastaustenLukumaara}} kpl</p>
         <p>asteikolla 1 - 5, 1 = "Vahvasti eri mieltä", 5 = "Vahvasti samaa mieltä":</p>
         <p>vastausten keskiarvo: {{kvpari.keskiarvo}}</p>
         <p>keskihajonta: {{kvpari.keskihajonta}}</p>
+      {% else %}
+        <p>vastauksia {{kvpari.vastaustenLukumaara}} kappaletta:</p>
+        <br>
+        <!--käydään sanalliset vastaukset läpi-->
+        {% for vastaus in kvpari.vastaukset %}
+          <p>vastaus: {{vastaus.vastausteksti}}</p>
+        {% endfor %}
+      {% endif %}
+    
       <br>
 			<br>
 

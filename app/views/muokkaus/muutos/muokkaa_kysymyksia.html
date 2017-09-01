@@ -15,7 +15,7 @@
 
 
 {% for kysymys in kysymykset%}
-  <form method="post" action="{{base_path}}/muokkaus/kyselylomake/muutos/{{kurssi_id}}">
+  <form method="post" action="{{base_path}}/muokkaus/kyselylomake/muutos/paivita/{{kurssi_id}}">
     <div class="form-group">
       <input type="text" name="nimi" class="form-control" value="{{kysymys.nimi}}">Kysymyksen otsikko
       <br>
@@ -29,6 +29,7 @@
       <input type="radio" name="vastaustyyppi" value="teksti" >teksti vastaus
       <input type="radio" name="vastaustyyppi" value="likert" CHECKED/>likert vastaus
       {% endif %}
+      <input type="hidden" name="kysymys_id" value="{{kysymys.kysymys_id}}">
 
       <button type="submit" class="btn btn-primary">Tallenna</button>
       <a href="{{base_path}}/muokkaus/kyselylomake/poista_kysymys/{{kurssi_id}}/{{kysymys.kysymys_id}}" class="btn btn-danger">Poista</a>
