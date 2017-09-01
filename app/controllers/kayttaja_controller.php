@@ -1,7 +1,7 @@
 <?php
 
 class KayttajaController extends BaseController {
-
+    //luokka vastaa 
     //$admin =1; //suunnittelijan käyttöoikeus, tarvitaan validoinneissa
 
     public static function kirjauduSisaan() {

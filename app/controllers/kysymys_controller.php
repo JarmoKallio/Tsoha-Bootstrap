@@ -21,6 +21,7 @@ class KysymysController extends BaseController {
         $kysymysteksti = $parametrit['kysymysteksti'];
         $vastaustyyppi = $parametrit['vastaustyyppi'];
 
+            
         $attribuutit = array(
             'kurssi_id' => $kurssi_id,
             'nimi' => $nimi,
