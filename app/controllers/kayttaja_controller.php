@@ -55,8 +55,7 @@ class KayttajaController extends BaseController {
             $kayttaja->tallennaKayttaja();
 
             //polku minne mennään ilmoituksen jälkeen
-            $polku = '/lisays/uusi/kayttaja';
-            Redirect::to('/lisays/esittely', array('message' => 'Käyttäjä on lisätty tietokantaan', 'path' => $polku));
+            View::make('/lisays/lisääkäyttäjä.html', array('message' => 'Käyttäjä on lisätty tietokantaan'));
         } else {
             View::make('/lisays/lisääkäyttäjä.html', array('errors' => $virheet, 'attributes' => $attributes));
         }
@@ -113,8 +112,8 @@ class KayttajaController extends BaseController {
 
             $kayttaja->paivitaKayttaja();
 
-            $polku = '/muokkaus/valitse/kayttaja';
-            Redirect::to('/lisays/esittely', array('message' => 'Käyttäjän tiedot on päivitetty!', 'path' => $polku));
+            
+            View::make('muokkaus/muutos/muokkaa_käyttäjää.html', array('message' => 'Käyttäjän tiedot on päivitetty!'));
         }
     }
 

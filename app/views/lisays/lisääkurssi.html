@@ -2,6 +2,13 @@
 {% block content %}
 <h1>Lisää kurssi tietokantaan</h1>
 
+
+{% if message %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endif %}
+
 <!--virheiden käsittely..-->
 {% if errors %}
 <div class="alert alert-danger">

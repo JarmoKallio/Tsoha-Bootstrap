@@ -27,6 +27,7 @@ class VastausController extends BaseController {
 
         if ($vastaustyyppi == "teksti") {
             $attributes['vastausteksti'] = $parametrit['vastausteksti'];
+            $virhVastausteksti = $parametrit['vastausteksti'];
         } else {
             $attributes['likert_vastaus'] = $parametrit['likert_vastaus'];
         }
@@ -42,7 +43,8 @@ class VastausController extends BaseController {
 
             self::kysyLoputKysymykset($vastaajaId, $kurssiId, $kurssiNimi, $vastaamattomatKysymykset, $virheet, $virhVastattuKysymysId, $virhVastausteksti);
         } else {
-            $virhVastausteksti = substr($virhVastausteksti, 0, 500);
+            
+            //$virhVastausteksti = substr($virhVastausteksti, 0, 500);
             $virhVastattuKysymysId = $parametrit['kysymys_id'];
 
             $vastattujenKysymystenIdt = Vastaus::kaikkienVastattujenKysymystenIdt($vastaajaId);

@@ -56,8 +56,7 @@ class KurssiController extends BaseController {
             $kurssi->tallennaKurssi();
 
             //polku minne mennään ilmoituksen jälkeen
-            $path = '/lisays/uusi/kurssi';
-            Redirect::to('/lisays/esittely', array('message' => 'Kurssi on lisätty tietokantaan', 'path' => $path));
+            View::make('/lisays/lisääkurssi.html', array('message' => 'Kurssi on lisätty tietokantaan'));
             //Redirect::to('/lisays/' . $kurssi->kurssi_id, array('message' => 'Kurssi on lisätty tietokantaan'));
         } else {
             View::make('/lisays/lisääkurssi.html', array('errors' => $virheet, 'attributes' => $attribuutit));

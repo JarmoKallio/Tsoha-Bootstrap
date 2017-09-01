@@ -86,7 +86,7 @@
         $errors[] = 'Käyttöoikeuden tulee olla arvoltaan 0 tai 1';
         }
 
-      if(!(is_int($this->kayttooikeus))){
+      if(!(is_numeric($this->kayttooikeus))){
         $errors[] = 'Käyttöoikeuden tulee olla numero';
         }
 

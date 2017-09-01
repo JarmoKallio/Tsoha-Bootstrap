@@ -2,6 +2,11 @@
 {% block content %}
 <h1>Muokkaa käyttäjän tietoja</h1>
 
+{% if message %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% else %}
 <!--virheiden käsittely..-->
 {% if errors %}
 <div class="alert alert-danger">
@@ -34,4 +39,5 @@
         <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
     </div>
 </form>
+{% endif %}
 {% endblock %}
