@@ -61,11 +61,6 @@ class KysymysController extends BaseController {
         View::make('muokkaus/muutos/muokkaa_kysymyksia.html', array('kysymykset' => $kysymykset, 'kurssi_id' => $kurssi_id, 'errors' => $virheet, 'viallinenKysymys' => $virhKysymys));
     }
 
-
-
-
-
-
     public static function poistaKysymys($kurssi_id, $kysymys_id) {
         self::tarkista_etta_kirjautunut();
         self::varmista_etta_kayttajan_oikeus(1);

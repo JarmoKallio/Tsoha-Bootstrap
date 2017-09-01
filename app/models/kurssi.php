@@ -15,16 +15,7 @@ class Kurssi extends BaseModel {
         $kysely->execute();
         $rivit = $kysely->fetchAll();
 
-        $kurssit = array();
-
-        foreach ($rivit as $rivi) {
-            $kurssit[] = new Kurssi(array(
-                'nimi' => $rivi['nimi'],
-                'laitos' => $rivi['laitos'],
-                'kurssi_id' => $rivi['kurssi_id']
-            ));
-        }
-
+        $kurssit = self::parseKurssit($rivit);
         return $kurssit;
     }
 
@@ -34,16 +25,7 @@ class Kurssi extends BaseModel {
         $kysely->execute(array('julkaistu' => true));
         $rivit = $kysely->fetchAll();
 
-        $kurssit = array();
-
-        foreach ($rivit as $rivi) {
-            $kurssit[] = new Kurssi(array(
-                'nimi' => $rivi['nimi'],
-                'laitos' => $rivi['laitos'],
-                'kurssi_id' => $rivi['kurssi_id']
-            ));
-        }
-
+        $kurssit = self::parseKurssit($rivit);
         return $kurssit;
     }
 
@@ -67,16 +49,8 @@ class Kurssi extends BaseModel {
         $kysely->execute(array('id' => $id));
         $rivi = $kysely->fetch();
 
-        if ($rivi) {
-            $kurssi = new Kurssi(array(
-                'nimi' => $rivi['nimi'],
-                'laitos' => $rivi['laitos'],
-                'kurssi_id' => $rivi['kurssi_id'],
-                'julkaistu' => $rivi['julkaistu']
-            ));
-
-            return $kurssi;
-        }
+        $kurssi= self::parseYksiKurssi($rivi);
+        return $kurssi;
     }
 
     public function tallennaKurssi() {
@@ -120,6 +94,11 @@ class Kurssi extends BaseModel {
 
         $rivit = $kysely->fetchAll();
 
+        $kurssit = self::parseKurssit($rivit);
+        return $kurssit;
+    }
+    
+    public static function parseKurssit($rivit){
         $kurssit = array();
 
         foreach ($rivit as $rivi) {
@@ -130,7 +109,20 @@ class Kurssi extends BaseModel {
             ));
         }
 
-        return $kurssit;
+        return $kurssit; 
+    }
+    
+    public static function parseYksiKurssi($rivi){
+        if ($rivi) {
+            $kurssi = new Kurssi(array(
+                'nimi' => $rivi['nimi'],
+                'laitos' => $rivi['laitos'],
+                'kurssi_id' => $rivi['kurssi_id'],
+                'julkaistu' => $rivi['julkaistu']
+            ));
+
+            return $kurssi;
+        }
     }
 
 }

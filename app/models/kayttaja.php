@@ -15,27 +15,20 @@ class Kayttaja extends BaseModel {
         $kysely->execute(array('nimi' => $nimi, 'salasana' => $salasana));
         $rivi = $kysely->fetch();
 
-        if ($rivi) {
-            // Käyttäjä löytyi, palautetaan löytynyt käyttäjä oliona
-            $kayttaja = new Kayttaja(array(
-                'nimi' => $rivi['nimi'],
-                'salasana' => $rivi['salasana'],
-                'kayttooikeus' => $rivi['kayttooikeus'],
-                'kayttaja_id' => $rivi['kayttaja_id']
-            ));
-
-            return $kayttaja;
-        } else {
-            // Käyttäjää ei löytynyt, palautetaan null
-            return null;
-        }
+        $kayttaja= self::parseYksiKayttaja($rivi);
+        return $kayttaja;
     }
 
     public static function haeKayttaja($kayttaja_id) {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE kayttaja_id = :id LIMIT 1');
         $kysely->execute(array('id' => $kayttaja_id));
         $rivi = $kysely->fetch();
+        
+        $kayttaja= self::parseYksiKayttaja($rivi);
+        return $kayttaja;
+    }
 
+    public static function parseYksiKayttaja($rivi){
         if ($rivi) {
             $kayttaja = new Kayttaja(array(
                 'nimi' => $rivi['nimi'],
@@ -48,14 +41,17 @@ class Kayttaja extends BaseModel {
         }
     }
 
-    public static function kaikkiKayttajat() {
+    public static function kaikkiRivit(){
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja');
-
         $kysely->execute();
         $rivit = $kysely->fetchAll();
+        return $rivit;
+    }
+
+    public static function kaikkiKayttajat() {
+        $rivit = self::kaikkiRivit();
 
         $kayttajat = array();
-
         foreach ($rivit as $rivi) {
             $kayttajat[] = new Kayttaja(array(
                 'nimi' => $rivi['nimi'],
@@ -95,7 +91,6 @@ class Kayttaja extends BaseModel {
     public static function valitseOpettajatKurssille($kurssi_id) {
         //etsitään liitostaulusta kaikki käyttäjät, jotka merkattu kurssin pitäjiksi
         $kysely = DB::connection()->prepare('SELECT * FROM liitoskayttajakurssi WHERE kurssi_id = :kurssi_id');
-
         $kysely->execute(array('kurssi_id' => $kurssi_id));
         $rivit = $kysely->fetchAll();
 
@@ -105,10 +100,8 @@ class Kayttaja extends BaseModel {
             $valittujen_käyttäjien_idt[$row['kayttaja_id']] = true;
         }
 
-        $kyselyKaikki = DB::connection()->prepare('SELECT * FROM Kayttaja');
 
-        $kyselyKaikki->execute();
-        $rivitKaikki = $kyselyKaikki->fetchAll();
+        $rivitKaikki = self::kaikkiRivit();
 
         $kayttajat = array();
 

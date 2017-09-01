@@ -109,10 +109,7 @@ class KayttajaController extends BaseController {
         if (count($errors) > 0) {
             View::make('muokkaus/muutos/muokkaa_käyttäjää.html', array('errors' => $errors, 'attributes' => $attribuutit));
         } else {
-
             $kayttaja->paivitaKayttaja();
-
-            
             View::make('muokkaus/muutos/muokkaa_käyttäjää.html', array('message' => 'Käyttäjän tiedot on päivitetty!'));
         }
     }

@@ -31,18 +31,7 @@ class Vastaus extends BaseModel {
         $kysely->execute(array('kysymys_id' => $kysymys_id));
         $rivit = $kysely->fetchAll();
 
-        $vastaukset = array();
-
-        foreach ($rivit as $rivi) {
-            $vastaukset[] = new Vastaus(array(
-                'vastaus_id' => $rivi['vastaus_id'],
-                'kysymys_id' => $rivi['kysymys_id'],
-                'vastaaja_id' => $rivi['vastaaja_id'],
-                'vastausteksti' => $rivi['vastausteksti'],
-                'likert_vastaus' => $rivi['likert_vastaus']
-            ));
-        }
-
+        $vastaukset = self::parseVastaukset($rivit);
         return $vastaukset;
     }
 
@@ -84,6 +73,20 @@ class Vastaus extends BaseModel {
         $vastaajienMaara = $rivi[0];
 
         return $vastaajienMaara;
+    }
+    
+    public static function parseVastaukset($rivit){
+        $vastaukset = array();
+        foreach ($rivit as $rivi) {
+            $vastaukset[] = new Vastaus(array(
+                'vastaus_id' => $rivi['vastaus_id'],
+                'kysymys_id' => $rivi['kysymys_id'],
+                'vastaaja_id' => $rivi['vastaaja_id'],
+                'vastausteksti' => $rivi['vastausteksti'],
+                'likert_vastaus' => $rivi['likert_vastaus']
+            ));
+        }
+        return $vastaukset;
     }
 
 }
