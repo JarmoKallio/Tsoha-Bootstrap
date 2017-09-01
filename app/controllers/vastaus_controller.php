@@ -83,6 +83,8 @@ class VastausController extends BaseController {
         $kurssi = Kurssi::hae($kurssi_id);
         $kysymykset = Kysymys::kaikkiKurssiIdlla($kurssi_id);
 
+        $kysymys_vastaus_parit = array();
+
         foreach ($kysymykset as $kysymys) {
             $kysymysId = $kysymys->kysymys_id;
             $vastaukset = Vastaus::kaikkiIdlla($kysymysId);

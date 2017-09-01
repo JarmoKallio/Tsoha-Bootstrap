@@ -71,7 +71,8 @@ class Kurssi extends BaseModel {
             $kurssi = new Kurssi(array(
                 'nimi' => $rivi['nimi'],
                 'laitos' => $rivi['laitos'],
-                'kurssi_id' => $rivi['kurssi_id']
+                'kurssi_id' => $rivi['kurssi_id'],
+                'julkaistu' => $rivi['julkaistu']
             ));
 
             return $kurssi;

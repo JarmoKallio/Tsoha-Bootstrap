@@ -70,7 +70,17 @@ class KurssiController extends BaseController {
         self::varmista_etta_kayttajan_oikeus(1);
 
         $kurssi = Kurssi::hae($id);
-        View::make('muokkaus/muokkaa_tai_poista_kurssi.html', array('kurssi' => $kurssi));
+
+        //tarkistetaan onko kurssin kyselylomake julkaistu vai ei
+        $avattu=$kurssi->julkaistu;
+        if(!empty($avattu)){
+            $message='kurssin kyselylomake on nyt avoinna vastaajille!';
+        }else{
+            $message='kyselylomake on nyt suljettu, voit avata sen milloin haluat!';
+        }
+
+        
+        View::make('muokkaus/muokkaa_tai_poista_kurssi.html', array('kurssi' => $kurssi, 'message' => $message));
     }
 
     public static function muutaParametreja($id) {
