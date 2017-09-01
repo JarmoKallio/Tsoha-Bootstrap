@@ -26,7 +26,7 @@ class Vastaus extends BaseModel{
 
   }
 
-	public static function all($Kysymys_id){
+	public static function all($kysymys_id){
 		$query = DB::connection()->prepare('SELECT * FROM Vastaus Where kysymys_id = :kysymys_id');
 
 		$query->execute(array('kysymys_id'=>$kysymys_id));
